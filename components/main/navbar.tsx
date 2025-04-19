@@ -11,24 +11,10 @@ import {
 } from "@/components/acernityui/navbar";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { Button } from "@/components/ui/button";
+import { navItems } from "@/data/navbar-items";
 import { useState } from "react";
 
 export function Navbar() {
-  const navItems = [
-    {
-      name: "Beranda",
-      link: "/",
-    },
-    {
-      name: "Pekerjaan",
-      link: "/pekerjaan",
-    },
-    {
-      name: "Mitra",
-      link: "/",
-    },
-  ];
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (

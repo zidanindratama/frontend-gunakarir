@@ -1,9 +1,9 @@
 "use client";
-import React from "react";
-import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedShinyText } from "@/components/acernityui/animated-shiny-text";
 import { ContainerScroll } from "@/components/acernityui/container-scroll-animation";
+import React from "react";
+import Image from "next/image";
 
 export function HeroScroll() {
   return (

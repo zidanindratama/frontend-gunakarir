@@ -7,12 +7,12 @@ import {
   IconSignature,
   IconTableColumn,
 } from "@tabler/icons-react";
+import { BentoGrid, BentoGridItem } from "@/components/acernityui/bento-grid";
 import { motion, useInView } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
-import { BentoGrid, BentoGridItem } from "@/components/acernityui/bento-grid";
 
-export function Bento() {
+export function Benefit() {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, {
     once: true,

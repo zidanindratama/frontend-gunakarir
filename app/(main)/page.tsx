@@ -1,6 +1,6 @@
 import { Background } from "@/components/acernityui/background";
 import { TextReveal } from "@/components/magicui/text-reveal";
-import { Bento } from "@/components/main/bento";
+import { Benefit } from "@/components/main/bento";
 import CTA from "@/components/main/cta";
 import { FAQ } from "@/components/main/faq";
 import Footer from "@/components/main/footer";
@@ -14,7 +14,7 @@ const MainPage = () => {
       <Navbar />
       <Background />
       <HeroScroll />
-      <Bento />
+      <Benefit />
       <CTA />
       <TextReveal>
         Temukan peluang, kembangkan potensi, dan mulai langkah nyata menuju

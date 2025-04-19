@@ -1,53 +1,11 @@
 "use client";
 import Link from "next/link";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
+import { socialLinkItems } from "@/data/social-link-items";
+import { footerLinkItems } from "@/data/footer-link-items";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-
-  const footerLinks = [
-    {
-      title: "Utama",
-      links: [
-        { name: "Beranda", href: "/" },
-        { name: "Pekerjaan", href: "/pekerjaan" },
-        { name: "Mitra", href: "/mitra" },
-      ],
-    },
-    {
-      title: "Komunitas",
-      links: [
-        { name: "Tentang Kami", href: "/tentang-kami" },
-        { name: "Berita", href: "/berita" },
-      ],
-    },
-    {
-      title: "Resources",
-      links: [
-        { name: "Dokumentasi", href: "https://github.com/zidanindratama" },
-        { name: "Privacy Policy", href: "/privasi" },
-      ],
-    },
-  ];
-
-  const socialLinks = [
-    {
-      icon: <FaGithub className="w-5 h-5 text-foreground" />,
-      href: "https://github.com/zidanindratama",
-      label: "GitHub",
-    },
-    {
-      icon: <FaTwitter className="w-5 h-5 text-sky-400" />,
-      href: "https://twitter.com/zidanindratama",
-      label: "Twitter",
-    },
-    {
-      icon: <FaLinkedin className="w-5 h-5 text-indigo-500" />,
-      href: "https://www.linkedin.com/in/zidan-indratama",
-      label: "Discord",
-    },
-  ];
 
   return (
     <footer className="w-full border-t border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950">
@@ -61,7 +19,7 @@ export function Footer() {
               Portal karier resmi mahasiswa & alumni Universitas Gunadarma
             </p>
             <div className="flex space-x-4 mt-4">
-              {socialLinks.map((social, idx) => (
+              {socialLinkItems.map((social, idx) => (
                 <Link
                   key={`social-${idx}`}
                   href={social.href}
@@ -73,7 +31,7 @@ export function Footer() {
               ))}
             </div>
           </div>
-          {footerLinks.map((section, idx) => (
+          {footerLinkItems.map((section, idx) => (
             <div
               key={`footer-section-${idx}`}
               className="flex flex-col space-y-4"
@@ -101,7 +59,7 @@ export function Footer() {
             &copy; {currentYear} GunaKarir. Made by{" "}
             <Link
               className="hover:text-blue-500 transition-colors"
-              href={socialLinks[0].href}
+              href={socialLinkItems[0].href}
             >
               Zidan Indratama
             </Link>

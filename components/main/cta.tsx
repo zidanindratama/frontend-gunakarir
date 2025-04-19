@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { motion } from "motion/react";
-import Link from "next/link";
 import { NumberTicker } from "@/components/acernityui/number-ticker";
 import { BoxReveal } from "@/components/acernityui/box-reveal";
+import { motion } from "motion/react";
+import Link from "next/link";
 import Image from "next/image";
 
 export const CTA = () => {

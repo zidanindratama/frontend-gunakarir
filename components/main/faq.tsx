@@ -1,9 +1,9 @@
 "use client";
 import { IconChevronDown } from "@tabler/icons-react";
-import { AnimatePresence, motion, useInView } from "motion/react";
-import React, { useRef, useState } from "react";
 import { BoxReveal } from "@/components/acernityui/box-reveal";
 import { faqItems } from "@/data/faq-items";
+import { AnimatePresence, motion, useInView } from "motion/react";
+import React, { useRef, useState } from "react";
 
 interface FAQItemProps {
   question: string;
