@@ -11,7 +11,7 @@ export const CTA = () => {
   return (
     <section className="pt-40 pb-16">
       <div className="container max-w-5xl mx-auto">
-        <div className="flex flex-col lg:flex-row gap-8 md:gap-0 items-stretch justify-between">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-0 items-stretch justify-between">
           <motion.div
             className="lg:w-[60%] space-y-4 flex flex-col justify-between md:space-y-6 text-center lg:text-left"
             initial={{ opacity: 0, y: 20 }}
