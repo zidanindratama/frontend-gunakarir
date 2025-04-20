@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
+import TanStackProvider from "@/providers/tanstack-query-provider";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
+import { Toaster } from "@/components/ui/sonner";
+import "./globals.css";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -29,7 +31,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <TanStackProvider>{children}</TanStackProvider>
+          <Toaster />
           <SmoothScroll />
         </ThemeProvider>
       </body>

@@ -1,4 +1,5 @@
 "use client";
+
 import { Badge } from "@/components/ui/badge";
 import { AnimatedShinyText } from "@/components/acernityui/animated-shiny-text";
 import { ContainerScroll } from "@/components/acernityui/container-scroll-animation";

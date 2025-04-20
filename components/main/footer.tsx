@@ -1,8 +1,9 @@
 "use client";
-import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 import { socialLinkItems } from "@/data/social-link-items";
 import { footerLinkItems } from "@/data/footer-link-items";
+import Link from "next/link";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();

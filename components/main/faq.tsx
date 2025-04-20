@@ -1,4 +1,5 @@
 "use client";
+
 import { IconChevronDown } from "@tabler/icons-react";
 import { BoxReveal } from "@/components/acernityui/box-reveal";
 import { faqItems } from "@/data/faq-items";
