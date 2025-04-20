@@ -20,7 +20,7 @@ export default function AuthCallbackPage() {
         router.replace("/");
       } catch (err) {
         console.error("Gagal autentikasi:", err);
-        router.replace("/signin");
+        router.replace("/sign-in");
       }
     };
 
