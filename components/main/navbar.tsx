@@ -35,7 +35,6 @@ export function Navbar() {
   const [user, setUser] = useState<TUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Cek apakah access_token ada
   const accessToken = Cookies.get("access_token");
 
   const { mutate: logout } = useDeleteData({
