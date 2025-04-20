@@ -37,16 +37,16 @@ export function Navbar() {
 
   const accessToken = Cookies.get("access_token");
 
-  const { mutate: logout } = useDeleteData({
+  const { mutate: signout } = useDeleteData({
     queryKey: "user-me",
     dataProtected: "auth/signout",
     backUrl: "/",
-    successMessage: "Logout berhasil!",
+    successMessage: "Signout berhasil!",
   });
 
   const handleSignout = () => {
     Cookies.remove("access_token");
-    logout();
+    signout();
     setUser(null);
   };
 
@@ -100,7 +100,7 @@ export function Navbar() {
                       <Link href={"/dashboard/profile"}>Profile</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <Link href={"/dashboard"}>Profile</Link>
+                      <Link href={"/dashboard"}>Dashboard</Link>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
