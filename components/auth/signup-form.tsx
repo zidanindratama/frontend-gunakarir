@@ -36,11 +36,11 @@ export function SignupForm({
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
-      username: "zidanindratama",
-      email: "zidanindratama31@gmail.com",
+      username: "",
+      email: "",
       role: "STUDENT",
-      password: "rahasia123",
-      confirm_password: "rahasia123",
+      password: "",
+      confirm_password: "",
     },
   });
 
