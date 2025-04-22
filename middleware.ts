@@ -46,7 +46,8 @@ export async function middleware(request: NextRequest) {
   if (
     !token &&
     (routePermissions.baseRoutes.includes(pathname) ||
-      pathname.startsWith("/dashboard"))
+      pathname.startsWith("/dashboard") ||
+      pathname.startsWith("/profile"))
   ) {
     url.pathname = "/sign-up";
     return NextResponse.redirect(url);

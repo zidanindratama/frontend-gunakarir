@@ -59,8 +59,7 @@ export const CTA = () => {
               >
                 <Link
                   className="text-white flex items-center justify-center leading-0"
-                  href="#"
-                  target="_blank"
+                  href="/sign-up"
                 >
                   Bergabung Sekarang
                 </Link>

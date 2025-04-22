@@ -5,7 +5,7 @@ export const DEV_URL = "http://localhost:3001/api";
 export const PROD_URL = "https://backend-gunakarir.vercel.app/api";
 
 const axiosInstance = axios.create({
-  baseURL: DEV_URL,
+  baseURL: PROD_URL,
   withCredentials: true,
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
@@ -15,10 +15,11 @@ const axiosInstance = axios.create({
 // Refreshtoken dari cookie server
 const refreshAuthToken = async () => {
   try {
-    const response = await axios.post(`${DEV_URL}/auth/refresh`, null, {
+    const response = await axios.post(`${PROD_URL}/auth/refresh`, null, {
       withCredentials: true,
     });
-    const newAccessToken = response.data.access_token;
+
+    const newAccessToken = response.data.accessToken;
 
     Cookies.set("access_token", newAccessToken);
     return newAccessToken;

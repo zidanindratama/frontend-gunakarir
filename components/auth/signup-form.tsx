@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SignUpSchema } from "@/schema/signup-schema";
-import axiosInstance, { DEV_URL } from "@/helpers/axios-instance";
+import axiosInstance, { PROD_URL } from "@/helpers/axios-instance";
 import Cookies from "js-cookie";
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -179,7 +179,7 @@ export function SignupForm({
             </span>
           </div>
           <Button variant="outline" className="w-full" asChild>
-            <Link href={`${DEV_URL}/auth/google`}>
+            <Link href={`${PROD_URL}/auth/google`}>
               <FaGoogle />
               Daftar dengan Google
             </Link>
