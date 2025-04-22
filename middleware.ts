@@ -4,11 +4,11 @@ import { jwtDecode } from "jwt-decode";
 
 export const routePermissions = {
   authRoutes: ["/sign-in", "/sign-up"],
-  baseRoutes: ["/dashboard", "/dashboard/profile"],
+  baseRoutes: ["/dashboard"],
   adminRoutes: ["/dashboard/rekruter", "/dashboard/mahasiswa"],
   recruiterRoutes: ["/dashboard/pekerjaan"],
-  studentRoutes: ["/dashboard/test-mahasiswa"],
-  commonAdminAndRecruiterRoutes: ["/dashboard/test-common"],
+  studentRoutes: ["/profile"],
+  commonAdminAndRecruiterRoutes: ["/dashboard/profile"],
 };
 
 type UserRole = "ADMIN" | "RECRUITER" | "STUDENT";
@@ -53,18 +53,22 @@ export async function middleware(request: NextRequest) {
   }
 
   // If token exists, decode and verify user role
-  if (token) {
-    const user: any = await jwtDecode(token as string);
+  if (token && typeof token === "string" && token.split(".").length === 3) {
+    try {
+      const user: any = jwtDecode(token);
+      const userRole = user.role as UserRole;
 
-    const userRole = user.role as UserRole; // Ensure user.role is of type UserRole
+      url.pathname = "/access-denied";
 
-    url.pathname = "/access-denied";
-
-    // Check role-specific route access
-    for (const permission of rolePermissions[userRole]) {
-      if (permission.routes.some((route) => pathname.startsWith(route))) {
-        return NextResponse.redirect(url);
+      for (const permission of rolePermissions[userRole]) {
+        if (permission.routes.some((route) => pathname.startsWith(route))) {
+          return NextResponse.redirect(url);
+        }
       }
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      url.pathname = "/sign-in";
+      return NextResponse.redirect(url);
     }
   }
 }

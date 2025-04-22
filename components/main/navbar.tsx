@@ -29,8 +29,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import axiosInstance from "@/helpers/axios-instance";
+import { useDecodedToken } from "@/hooks/use-decoded-token";
 
 export function Navbar() {
+  const decodedToken = useDecodedToken();
+  const profileUrl =
+    decodedToken?.role === "STUDENT" ? "/profile" : "/dashboard/profile";
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<TUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -51,7 +56,7 @@ export function Navbar() {
   };
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!accessToken || accessToken === undefined) {
       setUser(null);
       setIsLoading(false);
       return;
@@ -97,11 +102,13 @@ export function Navbar() {
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem>
-                      <Link href={"/dashboard/profile"}>Profile</Link>
+                      <Link href={profileUrl}>Profile</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href={"/dashboard"}>Dashboard</Link>
-                    </DropdownMenuItem>
+                    {decodedToken?.role === "ADMIN" && (
+                      <DropdownMenuItem>
+                        <Link href={"/dashboard"}>Dashboard</Link>
+                      </DropdownMenuItem>
+                    )}
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignout}>
@@ -156,11 +163,13 @@ export function Navbar() {
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                       <DropdownMenuItem>
-                        <Link href={"/dashboard/profile"}>Profile</Link>
+                        <Link href={profileUrl}>Profile</Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link href={"/dashboard"}>Profile</Link>
-                      </DropdownMenuItem>
+                      {decodedToken?.role === "ADMIN" && (
+                        <DropdownMenuItem>
+                          <Link href={"/dashboard"}>Dashboard</Link>
+                        </DropdownMenuItem>
+                      )}
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleSignout}>
