@@ -7,9 +7,6 @@ export const PROD_URL = "https://backend-gunakarir.vercel.app/api";
 const axiosInstance = axios.create({
   baseURL: PROD_URL,
   withCredentials: true,
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-  },
 });
 
 // Refreshtoken dari cookie server
@@ -45,23 +42,26 @@ axiosInstance.interceptors.request.use(
 
 // Intercept response dan coba refresh token jika diperlukan
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
 
       try {
         const newAccessToken = await refreshAuthToken();
-
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (error) {
         return Promise.reject(error);
       }
     }
+
     return Promise.reject(error);
   }
 );

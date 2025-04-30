@@ -40,8 +40,14 @@ export const usePatchData = ({
     },
     onError: (error: any) => {
       console.error(error);
+
+      const msg =
+        typeof error?.response?.data?.message === "string"
+          ? error.response.data.message
+          : error?.response?.data?.message?.message || "Gagal mengubah data.";
+
       toast("Terjadi kesalahan!", {
-        description: error?.response?.data?.message || "Gagal memproses data.",
+        description: msg,
       });
     },
     onSuccess: () => {

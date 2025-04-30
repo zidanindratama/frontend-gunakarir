@@ -93,7 +93,10 @@ export function Navbar() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Avatar>
-                    <AvatarImage src={user.image_url} />
+                    <AvatarImage
+                      src={user?.image_url}
+                      className="object-cover w-full h-full"
+                    />
                     <AvatarFallback>GN</AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
@@ -104,7 +107,7 @@ export function Navbar() {
                     <DropdownMenuItem>
                       <Link href={profileUrl}>Profile</Link>
                     </DropdownMenuItem>
-                    {decodedToken?.role === "ADMIN" && (
+                    {decodedToken?.role !== "STUDENT" && (
                       <DropdownMenuItem>
                         <Link href={"/dashboard"}>Dashboard</Link>
                       </DropdownMenuItem>

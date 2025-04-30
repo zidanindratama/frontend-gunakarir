@@ -24,7 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={`${montserrat.variable} antialiased`}>
+      <body
+        suppressHydrationWarning={true}
+        className={`${montserrat.variable} antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -32,7 +35,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TanStackProvider>{children}</TanStackProvider>
-          <Toaster />
+          <Toaster position="top-center" />
           <SmoothScroll />
         </ThemeProvider>
       </body>
