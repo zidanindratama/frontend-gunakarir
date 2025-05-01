@@ -19,6 +19,7 @@ const rolePermissions: Record<UserRole, { routes: string[]; deny: boolean }[]> =
       { routes: routePermissions.commonAdminAndRecruiterRoutes, deny: true },
       { routes: routePermissions.adminRoutes, deny: true },
       { routes: routePermissions.recruiterRoutes, deny: true },
+      { routes: routePermissions.baseRoutes, deny: true },
     ],
     RECRUITER: [
       { routes: routePermissions.adminRoutes, deny: true },
@@ -36,10 +37,26 @@ export async function middleware(request: NextRequest) {
 
   const token = await getCookie("access_token", { req: request });
 
-  // If token exists and trying to access authRoutes, redirect to dashboard
+  // If token exists and trying to access authRoutes, redirect based on role
   if (token && routePermissions.authRoutes.includes(pathname)) {
-    url.pathname = "/dashboard";
-    return NextResponse.redirect(url);
+    try {
+      const user: any = jwtDecode(token);
+      const userRole = user.role as UserRole;
+
+      if (userRole === "STUDENT") {
+        url.pathname = "/profile";
+      } else if (userRole === "RECRUITER") {
+        url.pathname = "/dashboard";
+      } else if (userRole === "ADMIN") {
+        url.pathname = "/dashboard";
+      }
+
+      return NextResponse.redirect(url);
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      url.pathname = "/sign-in";
+      return NextResponse.redirect(url);
+    }
   }
 
   // If no token and trying to access protected routes (dashboard), redirect to signup

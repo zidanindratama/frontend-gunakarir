@@ -29,3 +29,7 @@ export const StudentProfileUpdateSchema = z.object({
   district_id: z.string(),
   village_id: z.string(),
 });
+
+export type StudentProfileUpdateFormData = z.infer<
+  typeof StudentProfileUpdateSchema
+>;

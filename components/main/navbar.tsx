@@ -92,7 +92,7 @@ export function Navbar() {
             ) : user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Avatar>
+                  <Avatar className="aspect-square">
                     <AvatarImage
                       src={user?.image_url}
                       className="object-cover w-full h-full"

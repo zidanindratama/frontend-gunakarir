@@ -39,11 +39,23 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { StudentProfileUpdateSchema } from "@/schema/student-profile-update-schema";
+import {
+  StudentProfileUpdateFormData,
+  StudentProfileUpdateSchema,
+} from "@/schema/student-profile-update-schema";
 import { Textarea } from "@/components/ui/textarea";
 import { useFileUploader } from "@/hooks/use-file-uploader";
 import { useWilayah } from "@/hooks/useWilayah";
 import { SelectWilayah } from "@/components/ui/select-wilayah";
+import { EducationFormData } from "@/schema/education-schema";
+import EducationFormDialog from "./form-education";
+import ListEducation from "./list-education";
+import ListWorkExperience, { WorkExperience } from "./list-work-experience";
+import { WorkExperienceFormData } from "@/schema/work-experience-schema";
+import WorkExperienceFormDialog from "./form-work-experience";
+import { OrganizationalExperienceFormData } from "@/schema/organizational-experience-schema";
+import ListOrganizationalExperience from "./list-organizational-experience";
+import OrganizationalExperienceFormDialog from "./form-organizationnal-experience";
 
 const FormUbahProfile = () => {
   const { uploadFile } = useFileUploader();
@@ -53,52 +65,79 @@ const FormUbahProfile = () => {
     dataProtected: "auth/me",
   });
   const user: TUser = userData?.data;
+  console.log(user);
 
   const [showOtpDialog, setShowOtpDialog] = useState(false);
   const [pendingProfileData, setPendingProfileData] = useState<z.infer<
     typeof StudentProfileUpdateSchema
   > | null>(null);
 
-  const preloadValues: z.infer<typeof StudentProfileUpdateSchema> =
-    user?.student
-      ? {
-          username: user.username || "",
-          image_url: user.image_url || "",
-          NPM: user.student.NPM || "",
-          fullname: user.student.fullname || "",
-          address: user.student.address || "",
-          phone_number: user.student.phone_number || "",
-          bio: user.student.bio || "",
-          gender: user.student.gender || "MALE",
-          CV_file: user.student.CV_file || "",
-          KTM_file: user.student.KTM_file || "",
-          linkedin_url: user.student.linkedin_url || "",
-          instagram_url: user.student.instagram_url || "",
-          province_id: user.student.province_id || "",
-          city_id: user.student.city_id || "",
-          district_id: user.student.district_id || "",
-          village_id: user.student.village_id || "",
-        }
-      : {
-          username: "",
-          image_url: "",
-          NPM: "",
-          fullname: "",
-          address: "",
-          phone_number: "",
-          bio: "",
-          gender: "MALE",
-          CV_file: "",
-          KTM_file: "",
-          linkedin_url: "",
-          instagram_url: "",
-          province_id: "",
-          city_id: "",
-          district_id: "",
-          village_id: "",
-        };
+  const [showEducationDialog, setShowEducationDialog] = useState(false);
+  const [localEducations, setLocalEducations] = useState<EducationFormData[]>(
+    []
+  );
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [educationFormData, setEducationFormData] = useState<
+    EducationFormData | undefined
+  >(undefined);
 
-  const form = useForm<z.infer<typeof StudentProfileUpdateSchema>>({
+  const [showWorkDialog, setShowWorkDialog] = useState(false);
+  const [localWorkExperiences, setLocalWorkExperiences] = useState<
+    WorkExperience[]
+  >([]);
+  const [editingWorkIndex, setEditingWorkIndex] = useState<number | null>(null);
+  const [workFormData, setWorkFormData] = useState<
+    WorkExperienceFormData | undefined
+  >(undefined);
+
+  const [showOrgDialog, setShowOrgDialog] = useState(false);
+  const [localOrgExperiences, setLocalOrgExperiences] = useState<
+    OrganizationalExperienceFormData[]
+  >([]);
+  const [editingOrgIndex, setEditingOrgIndex] = useState<number | null>(null);
+  const [orgFormData, setOrgFormData] = useState<
+    OrganizationalExperienceFormData | undefined
+  >(undefined);
+
+  const preloadValues: StudentProfileUpdateFormData = user?.student
+    ? {
+        username: user.username || "",
+        image_url: user.image_url || "",
+        NPM: user.student.NPM || "",
+        fullname: user.student.fullname || "",
+        address: user.student.address || "",
+        phone_number: user.student.phone_number || "",
+        bio: user.student.bio || "",
+        gender: user.student.gender || "MALE",
+        CV_file: user.student.CV_file || "",
+        KTM_file: user.student.KTM_file || "",
+        linkedin_url: user.student.linkedin_url || "",
+        instagram_url: user.student.instagram_url || "",
+        province_id: user.student.province_id || "",
+        city_id: user.student.city_id || "",
+        district_id: user.student.district_id || "",
+        village_id: user.student.village_id || "",
+      }
+    : {
+        username: "",
+        image_url: "",
+        NPM: "",
+        fullname: "",
+        address: "",
+        phone_number: "",
+        bio: "",
+        gender: "MALE",
+        CV_file: "",
+        KTM_file: "",
+        linkedin_url: "",
+        instagram_url: "",
+        province_id: "",
+        city_id: "",
+        district_id: "",
+        village_id: "",
+      };
+
+  const form = useForm<StudentProfileUpdateFormData>({
     resolver: zodResolver(StudentProfileUpdateSchema),
     values: preloadValues,
   });
@@ -130,7 +169,7 @@ const FormUbahProfile = () => {
   const handleFileChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
     type: "pdf" | "image",
-    fieldName: keyof z.infer<typeof StudentProfileUpdateSchema>
+    fieldName: keyof StudentProfileUpdateFormData
   ) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -144,9 +183,7 @@ const FormUbahProfile = () => {
     }
   };
 
-  const onSubmit = async (
-    values: z.infer<typeof StudentProfileUpdateSchema>
-  ) => {
+  const onSubmit = async (values: StudentProfileUpdateFormData) => {
     const finalValues = form.getValues();
 
     postOTPRequest({});
@@ -161,7 +198,12 @@ const FormUbahProfile = () => {
   const handleOtpSubmit = (otp: string) => {
     updateProfile({
       otp,
-      data: pendingProfileData,
+      data: {
+        ...pendingProfileData,
+        educations: localEducations,
+        workExperiences: localWorkExperiences,
+        organizationalExperiences: localOrgExperiences,
+      },
     });
 
     setShowOtpDialog(false);
@@ -173,6 +215,36 @@ const FormUbahProfile = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (user?.student?.educations) {
+      setLocalEducations(
+        user.student.educations.map((edu) => ({
+          degree: edu.degree,
+          university: edu.university,
+          faculty: edu.faculty,
+          major: edu.major,
+          gpa: edu.gpa,
+          start_year: edu.start_year,
+          end_year: edu.end_year ?? undefined,
+          description: edu.description,
+          ongoing: edu.end_year === null,
+        }))
+      );
+    }
+    if (user?.student?.workExperiences) {
+      setLocalWorkExperiences(
+        user.student.workExperiences.map((exp) => ({
+          company_name: exp.company_name,
+          position: exp.position,
+          start_date: new Date(exp.start_date),
+          end_date: exp.end_date ? new Date(exp.end_date) : undefined,
+          description: exp.description ?? "",
+          ongoing: !exp.end_date,
+        }))
+      );
+    }
+  }, [user]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -180,7 +252,7 @@ const FormUbahProfile = () => {
           <div className="container mx-auto px-4 py-36 md:px-10">
             <div className="bg-white dark:bg-neutral-900 border p-8 rounded-lg shadow-sm">
               <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
-                <Avatar className="w-24 h-24 md:w-32 md:h-32">
+                <Avatar className="w-24 h-24 md:w-32 md:h-32 aspect-square">
                   <AvatarImage
                     src={user?.image_url}
                     className="object-cover w-full h-full"
@@ -484,7 +556,7 @@ const FormUbahProfile = () => {
                           <FormLabel>Bio</FormLabel>
                           <FormControl>
                             <Textarea
-                              placeholder="Ceritakan tetang dirimu"
+                              placeholder="Ceritakan tentang dirimu"
                               className="resize-none"
                               {...field}
                             />
@@ -496,6 +568,87 @@ const FormUbahProfile = () => {
                   </div>
                 </div>
               </div>
+              <ListEducation
+                data={localEducations}
+                onDelete={(index) =>
+                  setLocalEducations((prev) =>
+                    prev.filter((_, i) => i !== index)
+                  )
+                }
+                onEdit={(index) => {
+                  const selected = localEducations[index];
+                  setEducationFormData({
+                    degree: selected.degree,
+                    university: selected.university,
+                    faculty: selected.faculty ?? "",
+                    major: selected.major ?? "",
+                    gpa: selected.gpa ?? undefined,
+                    start_year: selected.start_year ?? 2020,
+                    end_year: selected.end_year,
+                    description: selected.description ?? "",
+                    ongoing: selected.end_year === undefined,
+                  });
+                  setEditingIndex(index);
+                  setShowEducationDialog(true);
+                }}
+                onAddNew={() => {
+                  setEditingIndex(null);
+                  setEducationFormData(undefined);
+                  requestAnimationFrame(() => {
+                    setShowEducationDialog(true);
+                  });
+                }}
+              />
+              <ListWorkExperience
+                data={localWorkExperiences}
+                onDelete={(index) =>
+                  setLocalWorkExperiences((prev) =>
+                    prev.filter((_, i) => i !== index)
+                  )
+                }
+                onEdit={(index) => {
+                  const selected = localWorkExperiences[index];
+                  setWorkFormData({
+                    ...selected,
+                    start_date: new Date(selected.start_date),
+                    end_date: selected.end_date
+                      ? new Date(selected.end_date)
+                      : undefined,
+                  });
+                  setEditingWorkIndex(index);
+                  setShowWorkDialog(true);
+                }}
+                onAddNew={() => {
+                  setEditingWorkIndex(null);
+                  setWorkFormData(undefined);
+                  setShowWorkDialog(true);
+                }}
+              />
+              <ListOrganizationalExperience
+                data={localOrgExperiences}
+                onDelete={(index) =>
+                  setLocalOrgExperiences((prev) =>
+                    prev.filter((_, i) => i !== index)
+                  )
+                }
+                onEdit={(index) => {
+                  const selected = localOrgExperiences[index];
+                  setOrgFormData({
+                    ...selected,
+                    start_date: new Date(selected.start_date),
+                    end_date: selected.end_date
+                      ? new Date(selected.end_date)
+                      : undefined,
+                  });
+                  setEditingOrgIndex(index);
+                  setShowOrgDialog(true);
+                }}
+                onAddNew={() => {
+                  setEditingOrgIndex(null);
+                  setOrgFormData(undefined);
+                  setShowOrgDialog(true);
+                }}
+              />
               <Button
                 type="submit"
                 className="w-fit bg-blue-gunakarir dark:text-white mt-10"
@@ -506,6 +659,56 @@ const FormUbahProfile = () => {
           </div>
         </section>
       </form>
+      <EducationFormDialog
+        open={showEducationDialog}
+        onClose={() => setShowEducationDialog(false)}
+        onSave={(newEducation) => {
+          if (editingIndex !== null) {
+            setLocalEducations((prev) =>
+              prev.map((item, i) => (i === editingIndex ? newEducation : item))
+            );
+          } else {
+            setLocalEducations((prev) => [...prev, newEducation]);
+          }
+          setEditingIndex(null);
+          setEducationFormData(undefined);
+        }}
+        defaultValue={educationFormData}
+      />
+      <WorkExperienceFormDialog
+        open={showWorkDialog}
+        onClose={() => setShowWorkDialog(false)}
+        onSave={(newWork) => {
+          if (editingWorkIndex !== null) {
+            setLocalWorkExperiences((prev) =>
+              prev.map((item, i) => (i === editingWorkIndex ? newWork : item))
+            );
+          } else {
+            setLocalWorkExperiences((prev) => [...prev, newWork]);
+          }
+
+          setEditingWorkIndex(null);
+          setWorkFormData(undefined);
+        }}
+        defaultValue={workFormData}
+      />
+      <OrganizationalExperienceFormDialog
+        open={showOrgDialog}
+        onClose={() => setShowOrgDialog(false)}
+        onSave={(newOrg) => {
+          if (editingOrgIndex !== null) {
+            setLocalOrgExperiences((prev) =>
+              prev.map((item, i) => (i === editingOrgIndex ? newOrg : item))
+            );
+          } else {
+            setLocalOrgExperiences((prev) => [...prev, newOrg]);
+          }
+          setEditingOrgIndex(null);
+          setOrgFormData(undefined);
+        }}
+        defaultValue={orgFormData}
+      />
+
       <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
         <DialogContent>
           <DialogHeader>

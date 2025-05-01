@@ -96,11 +96,14 @@ export type TEducation = {
   id: string;
   degree: "S1" | "S2" | "S3";
   university: string;
-  studyProgram?: string;
-  major?: string;
-  gpa?: number;
+  faculty: string;
+  major: string;
+  gpa: number;
   start_year: number;
-  end_year?: number;
+  end_year?: number | null;
+  description?: string;
+  created_at: string;
+  updated_at: string;
 };
 
 export type TJob = {
