@@ -47,6 +47,9 @@ export function SignupForm({
     },
   });
 
+  const role = form.watch("role");
+  console.log(role === "RECRUITER");
+
   const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
     setIsPending(true);
     toast("Memproses permintaan...", {
@@ -229,12 +232,14 @@ export function SignupForm({
               atau daftar dengan
             </span>
           </div>
-          <Button type="button" variant="outline" className="w-full" asChild>
-            <Link href={`${PROD_URL}/auth/google`}>
-              <FaGoogle />
-              Daftar dengan Google
-            </Link>
-          </Button>
+          {role === "STUDENT" && (
+            <Button type="button" variant="outline" className="w-full" asChild>
+              <Link href={`${PROD_URL}/auth/google`}>
+                <FaGoogle />
+                Daftar dengan Google
+              </Link>
+            </Button>
+          )}
         </div>
         <div className="text-center text-sm">
           Sudah punya akun?{" "}
