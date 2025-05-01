@@ -1,5 +1,12 @@
 import { RouteItems } from "@/types/route-type";
-import { Building2, LifeBuoy, Send, SquareTerminal, User } from "lucide-react";
+import {
+  Building2,
+  LayoutDashboard,
+  LifeBuoy,
+  Send,
+  SquareTerminal,
+  User,
+} from "lucide-react";
 
 export const routeItems: RouteItems = {
   navMain: [

@@ -1,6 +1,5 @@
-"use client";
-
-import RecruiterStatusCard from "@/components/dashboard/main/reecuiter-status-card";
+import FormRecruiterProfile from "@/components/dashboard/profile/form-recruiter-profile";
+import DataTableRekruter from "@/components/dashboard/rekruter/datatable-rekruter";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,17 +10,8 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useGetData } from "@/hooks/use-get-data";
-import { TUser } from "@/types/user-type";
 
-export default function DashboardMainPage() {
-  const { data: userData } = useGetData({
-    queryKey: ["user-me"],
-    dataProtected: "auth/me",
-  });
-
-  const user: TUser = userData?.data;
-
+const DashboardListRekruter = () => {
   return (
     <section>
       <header className="flex h-16 shrink-0 items-center gap-2">
@@ -38,21 +28,17 @@ export default function DashboardMainPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>Beranda</BreadcrumbPage>
+                <BreadcrumbPage>Rekruter</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </div>
       </header>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        {user.role === "RECRUITER" && <RecruiterStatusCard />}
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div className="bg-muted/50 aspect-video rounded-xl" />
-          <div className="bg-muted/50 aspect-video rounded-xl" />
-          <div className="bg-muted/50 aspect-video rounded-xl" />
-        </div>
-        <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
+        <DataTableRekruter />
       </div>
     </section>
   );
-}
+};
+
+export default DashboardListRekruter;

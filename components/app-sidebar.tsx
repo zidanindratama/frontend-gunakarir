@@ -7,8 +7,11 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import * as React from "react";
@@ -20,6 +23,7 @@ import { TUser } from "@/types/user-type";
 import { NavManagement } from "./nav-management";
 import { NavbarLogo } from "./acernityui/navbar";
 import { ModeToggle } from "./ui/mode-toggle";
+import { LayoutDashboard } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: userData } = useGetData({
@@ -43,6 +47,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+          <SidebarGroupLabel>Beranda</SidebarGroupLabel>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href={"/dashboard"}>
+                  <LayoutDashboard />
+                  <span>Dashboard</span>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
         {filteredManagement.length > 0 && (
           <NavManagement projects={filteredManagement} />
         )}

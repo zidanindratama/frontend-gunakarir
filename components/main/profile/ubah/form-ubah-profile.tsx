@@ -65,7 +65,6 @@ const FormUbahProfile = () => {
     dataProtected: "auth/me",
   });
   const user: TUser = userData?.data;
-  console.log(user);
 
   const [showOtpDialog, setShowOtpDialog] = useState(false);
   const [pendingProfileData, setPendingProfileData] = useState<z.infer<

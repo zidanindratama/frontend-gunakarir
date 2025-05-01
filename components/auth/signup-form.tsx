@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SignUpSchema } from "@/schema/signup-schema";
-import axiosInstance, { PROD_URL } from "@/helpers/axios-instance";
+import axiosInstance, { DEV_URL, PROD_URL } from "@/helpers/axios-instance";
 import Cookies from "js-cookie";
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -227,18 +227,25 @@ export function SignupForm({
               "Daftar"
             )}
           </Button>
-          <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-            <span className="relative z-10 bg-background px-2 text-muted-foreground">
-              atau daftar dengan
-            </span>
-          </div>
           {role === "STUDENT" && (
-            <Button type="button" variant="outline" className="w-full" asChild>
-              <Link href={`${PROD_URL}/auth/google`}>
-                <FaGoogle />
-                Daftar dengan Google
-              </Link>
-            </Button>
+            <>
+              <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+                <span className="relative z-10 bg-background px-2 text-muted-foreground">
+                  atau daftar dengan
+                </span>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                asChild
+              >
+                <Link href={`${DEV_URL}/auth/google`}>
+                  <FaGoogle />
+                  Daftar dengan Google
+                </Link>
+              </Button>
+            </>
           )}
         </div>
         <div className="text-center text-sm">

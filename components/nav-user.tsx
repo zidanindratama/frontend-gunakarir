@@ -20,6 +20,7 @@ import { useDeleteData } from "@/hooks/use-delete-data";
 import { TUser } from "@/types/user-type";
 import Cookies from "js-cookie";
 import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
+import Link from "next/link";
 
 export function NavUser({ username, image_url, email }: Partial<TUser>) {
   const { isMobile } = useSidebar();
@@ -77,8 +78,13 @@ export function NavUser({ username, image_url, email }: Partial<TUser>) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <BadgeCheck />
-                Profile
+                <Link
+                  href={"/dashboard/profile"}
+                  className="flex flex-row gap-2 items-center"
+                >
+                  <BadgeCheck />
+                  Profile
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

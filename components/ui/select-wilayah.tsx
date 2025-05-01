@@ -54,7 +54,7 @@ export const SelectWilayah: React.FC<SelectWilayahProps> = ({
           </Button>
         </FormControl>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0">
+      <PopoverContent className="w-full p-0" align="start">
         <Command>
           <CommandInput placeholder={placeholder} className="h-9" />
           <CommandList>
