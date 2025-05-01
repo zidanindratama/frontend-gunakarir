@@ -132,7 +132,7 @@ const FormRecruiterProfile = () => {
     districtId: form.watch("district_id"),
   });
 
-  const onSubmit = async (values: RecruiterRequestFormData) => {
+  const onSubmit = async () => {
     const finalValues = form.getValues();
 
     if (!user?.recruiter) {

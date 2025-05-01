@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SignUpSchema } from "@/schema/signup-schema";
-import axiosInstance, { DEV_URL, PROD_URL } from "@/helpers/axios-instance";
+import axiosInstance, { PROD_URL } from "@/helpers/axios-instance";
 import Cookies from "js-cookie";
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -240,7 +240,7 @@ export function SignupForm({
                 className="w-full"
                 asChild
               >
-                <Link href={`${DEV_URL}/auth/google`}>
+                <Link href={`${PROD_URL}/auth/google`}>
                   <FaGoogle />
                   Daftar dengan Google
                 </Link>

@@ -1,4 +1,3 @@
-import FormRecruiterProfile from "@/components/dashboard/profile/form-recruiter-profile";
 import DataTableRekruter from "@/components/dashboard/rekruter/datatable-rekruter";
 import {
   Breadcrumb,
@@ -10,6 +9,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Suspense } from "react";
 
 const DashboardListRekruter = () => {
   return (
@@ -35,7 +35,9 @@ const DashboardListRekruter = () => {
         </div>
       </header>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <DataTableRekruter />
+        <Suspense>
+          <DataTableRekruter />
+        </Suspense>
       </div>
     </section>
   );
