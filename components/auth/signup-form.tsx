@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SignUpSchema } from "@/schema/signup-schema";
 import axiosInstance, { PROD_URL } from "@/helpers/axios-instance";
 import Cookies from "js-cookie";
@@ -25,6 +27,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { HiOutlineUser, HiOutlineUserGroup } from "react-icons/hi2";
 
 export function SignupForm({
   className,
@@ -49,20 +52,16 @@ export function SignupForm({
     toast("Memproses permintaan...", {
       description: "Silakan tunggu sebentar.",
     });
-
     try {
       const response = await axiosInstance.post("/auth/signup", values, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-
       Cookies.set("access_token", response.data.accessToken);
-
       toast("Berhasil masuk!", {
         description: "Selamat datang di GunaKarir.",
       });
-
       router.push(response.data.redirectUrl);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -95,6 +94,58 @@ export function SignupForm({
         </div>
         <div className="grid gap-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                        className="grid grid-cols-2 gap-4"
+                      >
+                        <div>
+                          <RadioGroupItem
+                            value="STUDENT"
+                            id="mahasiswa"
+                            className="peer sr-only"
+                          />
+                          <Label
+                            htmlFor="mahasiswa"
+                            className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 text-center hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                          >
+                            <HiOutlineUserGroup className="mb-3 h-6 w-6" />
+                            Mahasiswa
+                          </Label>
+                        </div>
+                        <div>
+                          <RadioGroupItem
+                            value="RECRUITER"
+                            id="rekruter"
+                            className="peer sr-only"
+                          />
+                          <Label
+                            htmlFor="rekruter"
+                            className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 text-center hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                          >
+                            <HiOutlineUser className="mb-3 h-6 w-6" />
+                            Rekruter
+                          </Label>
+                        </div>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormDescription>
+                      Pilih peran kamu untuk melanjutkan pendaftaran.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={form.control}
               name="username"
@@ -178,7 +229,7 @@ export function SignupForm({
               atau daftar dengan
             </span>
           </div>
-          <Button variant="outline" className="w-full" asChild>
+          <Button type="button" variant="outline" className="w-full" asChild>
             <Link href={`${PROD_URL}/auth/google`}>
               <FaGoogle />
               Daftar dengan Google
@@ -187,9 +238,9 @@ export function SignupForm({
         </div>
         <div className="text-center text-sm">
           Sudah punya akun?{" "}
-          <a href="/sign-in" className="underline underline-offset-4">
+          <Link href="/sign-in" className="underline underline-offset-4">
             Masuk di sini
-          </a>
+          </Link>
         </div>
       </form>
     </Form>
