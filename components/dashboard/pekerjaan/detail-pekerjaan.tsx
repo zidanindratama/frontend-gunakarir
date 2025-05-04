@@ -89,9 +89,6 @@ const DetailPekerjaan = ({ pekrjaanId }: Props) => {
           <DataRow label="Deskripsi Singkat" className="md:col-span-2">
             {job?.short_description}
           </DataRow>
-          <DataRow label="Deskripsi Lengkap" className="md:col-span-2">
-            {job?.full_description}
-          </DataRow>
           <DataRow label="Jurusan yang Dibutuhkan" className="md:col-span-2">
             {job?.jobMajors && job.jobMajors.length > 0 ? (
               <ul className="list-disc ml-5">

@@ -116,6 +116,15 @@ export type TEducation = {
   updated_at: string;
 };
 
+export type TJobMajor = {
+  major_id: string;
+  major: {
+    id: string;
+    name: string;
+    degree: string;
+  };
+};
+
 export type TJob = {
   id: string;
   recruiter_id: string;
@@ -137,11 +146,5 @@ export type TJob = {
     company_logo: string;
     status: string;
   };
-  jobMajors?: {
-    major: {
-      id: string;
-      name: string;
-      degree: string;
-    };
-  }[];
+  jobMajors?: TJobMajor[];
 };

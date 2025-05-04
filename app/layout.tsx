@@ -5,6 +5,7 @@ import TanStackProvider from "@/providers/tanstack-query-provider";
 import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -34,9 +35,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TanStackProvider>{children}</TanStackProvider>
-          <Toaster position="top-center" />
-          <SmoothScroll />
+          <TooltipProvider>
+            <TanStackProvider>{children}</TanStackProvider>
+            <Toaster position="top-center" />
+            <SmoothScroll />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>

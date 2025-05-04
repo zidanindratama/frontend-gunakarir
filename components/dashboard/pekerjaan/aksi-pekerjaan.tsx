@@ -28,7 +28,7 @@ type Props = {
 export function AksiPekerjaan({ pekerjaanId }: Props) {
   const [open, setOpen] = useState(false);
   const deleteJob = useDeleteData({
-    queryKey: "pekerjaan",
+    queryKey: "jobs",
     dataProtected: `jobs/${pekerjaanId}`,
     successMessage: "Pekerjaan berhasil dihapus!",
   });
@@ -46,6 +46,11 @@ export function AksiPekerjaan({ pekerjaanId }: Props) {
           <DropdownMenuItem asChild>
             <Link href={`/dashboard/pekerjaan/${pekerjaanId}`}>
               Lihat Detail
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={`/dashboard/pekerjaan/${pekerjaanId}/ubah`}>
+              Ubah Pekerjaan
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />

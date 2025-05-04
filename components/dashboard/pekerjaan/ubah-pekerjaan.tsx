@@ -23,36 +23,27 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWilayah } from "@/hooks/useWilayah";
 import { SelectWilayah } from "@/components/ui/select-wilayah";
-import { usePostData } from "@/hooks/use-post-data";
 import { CreateJobFormData, CreateJobSchema } from "@/schema/job-create.schema";
 import { DatePickerField } from "@/components/ui/date-picker-field";
 import { useGetData } from "@/hooks/use-get-data";
-import { TUser } from "@/types/user-type";
 import { MinimalTiptapEditor } from "@/components/minimal-tiptap";
 import { MultiSelectField } from "@/components/ui/multi-select-field";
 import { useInfiniteFetcher } from "@/hooks/use-get-infinite-data";
+import { usePatchData } from "@/hooks/use-patch-data";
+import { useEffect, useState } from "react";
+import { TJobMajor } from "@/types/user-type";
 
-const TambahPekerjaan = () => {
-  const { data: userData } = useGetData({
-    queryKey: ["user-me"],
-    dataProtected: "auth/me",
+const UbahPekerjaan = ({ pekerjaanId }: { pekerjaanId: string }) => {
+  const [isReady, setIsReady] = useState(false);
+
+  const { data: pekerjaanData } = useGetData({
+    queryKey: ["job", pekerjaanId],
+    dataProtected: `jobs/${pekerjaanId}`,
   });
-  const user: TUser = userData?.data;
 
   const form = useForm<CreateJobFormData>({
     resolver: zodResolver(CreateJobSchema),
-    defaultValues: {
-      title: "test",
-      short_description: "test",
-      full_description: "test",
-      salary: 0,
-      quota: 0,
-      application_start: new Date(),
-      application_end: new Date(),
-      province_id: "",
-      city_id: "",
-      major_ids: [],
-    },
+    defaultValues: pekerjaanData?.data,
   });
 
   const wilayah = useWilayah({
@@ -68,26 +59,39 @@ const TambahPekerjaan = () => {
     });
   const majorOptions = data?.pages.flatMap((page) => page.data) || [];
 
-  const { mutate: submitJob } = usePostData({
+  const { mutate: updateJob } = usePatchData({
     queryKey: "jobs",
-    dataProtected: `jobs/${user?.recruiter?.id}`,
-    successMessage: "Lowongan pekerjaan berhasil ditambahkan!",
+    dataProtected: `jobs/${pekerjaanId}`,
+    successMessage: "Lowongan pekerjaan berhasil diperbarui!",
     backUrl: "/dashboard/pekerjaan",
   });
 
   const onSubmit = (values: CreateJobFormData) => {
-    submitJob(values);
+    updateJob(values);
   };
+
+  useEffect(() => {
+    if (pekerjaanData?.data) {
+      const formValue = {
+        ...pekerjaanData.data,
+        full_description: pekerjaanData.data.full_description ?? "",
+        major_ids:
+          pekerjaanData.data.jobMajors?.map((m: TJobMajor) => m.major.id) ?? [],
+      };
+      form.reset(formValue);
+      setIsReady(true);
+    }
+  }, [pekerjaanData]);
+
+  if (!isReady) return null;
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card>
           <CardHeader>
-            <CardTitle>Tambah Pekerjaan</CardTitle>
-            <CardDescription>
-              Isi detail lowongan pekerjaan baru.
-            </CardDescription>
+            <CardTitle>Ubah Pekerjaan</CardTitle>
+            <CardDescription>Edit detail lowongan pekerjaan.</CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="md:col-span-2">
@@ -231,6 +235,7 @@ const TambahPekerjaan = () => {
                     <FormLabel>Deskripsi Lengkap</FormLabel>
                     <FormControl>
                       <MinimalTiptapEditor
+                        key={pekerjaanId}
                         value={field.value}
                         onChange={field.onChange}
                         className="w-full"
@@ -250,7 +255,7 @@ const TambahPekerjaan = () => {
           </CardContent>
           <CardFooter>
             <Button type="submit" className="bg-blue-500">
-              Simpan
+              Simpan Perubahan
             </Button>
           </CardFooter>
         </Card>
@@ -259,4 +264,4 @@ const TambahPekerjaan = () => {
   );
 };
 
-export default TambahPekerjaan;
+export default UbahPekerjaan;
