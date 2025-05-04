@@ -4,24 +4,24 @@ import { TUser } from "@/types/user-type";
 
 export const usePostOrPatchRecruiter = (user?: TUser) => {
   const post = usePostData({
-    queryKey: "recruiter-profile",
+    queryKey: "user-me",
     dataProtected: "recruiters/request",
     successMessage: "Pengajuan berhasil dikirim!",
-    backUrl: "/dashboard",
+    backUrl: "/dashboard/profile",
   });
 
   const patchAppeal = usePatchData({
-    queryKey: "recruiter-profile",
+    queryKey: "user-me",
     dataProtected: "recruiters/appeal",
     successMessage: "Pengajuan banding berhasil!",
-    backUrl: "/dashboard",
+    backUrl: "/dashboard/profile",
   });
 
   const patchPending = usePatchData({
-    queryKey: "recruiter-profile",
+    queryKey: "user-me",
     dataProtected: "recruiters/update-pending",
     successMessage: "Profil berhasil diperbarui!",
-    backUrl: "/dashboard",
+    backUrl: "/dashboard/profile",
   });
 
   const submit = (values: any) => {

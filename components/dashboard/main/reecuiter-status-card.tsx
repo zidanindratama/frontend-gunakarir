@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useGetData } from "@/hooks/use-get-data";
+import Link from "next/link";
 
 const statusList = {
   APPROVED: {
@@ -36,9 +37,42 @@ export default function RecruiterStatusCard() {
     dataProtected: "auth/me",
   });
 
-  const status = data?.data?.recruiter?.status ?? "PENDING";
-  const reason = data?.data?.recruiter?.rejection_reason ?? "";
+  const recruiter = data?.data?.recruiter;
 
+  if (!recruiter) {
+    return (
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>Status Mitra</CardTitle>
+          <CardDescription>
+            Informasi status akun rekruter Anda.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="flex items-center space-x-4 rounded-md border p-4">
+            <ShieldX className="text-red-500" />
+            <div className="flex-1 space-y-1">
+              <p className="text-sm font-medium leading-none">
+                Data Rekruter Belum Lengkap
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Silakan lengkapi data perusahaan terlebih dahulu untuk
+                mengajukan sebagai mitra GunaKarir.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button variant="outline" className="w-full" asChild>
+            <Link href={"/dashboard/profile"}>Lengkapi Data</Link>
+          </Button>
+        </CardFooter>
+      </Card>
+    );
+  }
+
+  const status = recruiter.status;
+  const reason = recruiter.rejection_reason ?? "";
   const { icon, title, description } =
     statusList[status as keyof typeof statusList];
 

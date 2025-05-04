@@ -56,6 +56,7 @@ import WorkExperienceFormDialog from "./form-work-experience";
 import { OrganizationalExperienceFormData } from "@/schema/organizational-experience-schema";
 import ListOrganizationalExperience from "./list-organizational-experience";
 import OrganizationalExperienceFormDialog from "./form-organizationnal-experience";
+import Link from "next/link";
 
 const FormUbahProfile = () => {
   const { uploadFile } = useFileUploader();
@@ -100,22 +101,22 @@ const FormUbahProfile = () => {
 
   const preloadValues: StudentProfileUpdateFormData = user?.student
     ? {
-        username: user.username || "",
-        image_url: user.image_url || "",
-        NPM: user.student.NPM || "",
-        fullname: user.student.fullname || "",
-        address: user.student.address || "",
-        phone_number: user.student.phone_number || "",
-        bio: user.student.bio || "",
+        username: user.username ?? "",
+        image_url: user.image_url ?? "",
+        NPM: user.student.NPM ?? "",
+        fullname: user.student.fullname ?? "",
+        address: user.student.address ?? "",
+        phone_number: user.student.phone_number ?? "",
+        bio: user.student.bio ?? "",
         gender: user.student.gender || "MALE",
-        CV_file: user.student.CV_file || "",
-        KTM_file: user.student.KTM_file || "",
-        linkedin_url: user.student.linkedin_url || "",
-        instagram_url: user.student.instagram_url || "",
-        province_id: user.student.province_id || "",
-        city_id: user.student.city_id || "",
-        district_id: user.student.district_id || "",
-        village_id: user.student.village_id || "",
+        CV_file: user.student.CV_file ?? "",
+        KTM_file: user.student.KTM_file ?? "",
+        linkedin_url: user.student.linkedin_url ?? "",
+        instagram_url: user.student.instagram_url ?? "",
+        province_id: user.student.province_id ?? "",
+        city_id: user.student.city_id ?? "",
+        district_id: user.student.district_id ?? "",
+        village_id: user.student.village_id ?? "",
       }
     : {
         username: "",
@@ -265,7 +266,6 @@ const FormUbahProfile = () => {
                   <p className="text-neutral-600 dark:text-neutral-300">
                     {user?.email}
                   </p>
-
                   <div className="mt-6">
                     <FormField
                       control={form.control}
@@ -481,7 +481,19 @@ const FormUbahProfile = () => {
                     name="CV_file"
                     render={() => (
                       <FormItem>
-                        <FormLabel>CV</FormLabel>
+                        <FormLabel className="flex items-center gap-2">
+                          CV
+                          {preloadValues.CV_file && (
+                            <Link
+                              href={preloadValues.CV_file}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-blue-600 underline hover:text-blue-800"
+                            >
+                              (Lihat CV)
+                            </Link>
+                          )}
+                        </FormLabel>
                         <FormControl>
                           <Input
                             type="file"
@@ -500,7 +512,19 @@ const FormUbahProfile = () => {
                     name="KTM_file"
                     render={() => (
                       <FormItem>
-                        <FormLabel>KTM</FormLabel>
+                        <FormLabel className="flex items-center gap-2">
+                          KTM
+                          {preloadValues.KTM_file && (
+                            <Link
+                              href={preloadValues.KTM_file}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-blue-600 underline hover:text-blue-800"
+                            >
+                              (Lihat KTM)
+                            </Link>
+                          )}
+                        </FormLabel>
                         <FormControl>
                           <Input
                             type="file"

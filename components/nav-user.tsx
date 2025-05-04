@@ -77,7 +77,7 @@ export function NavUser({ username, image_url, email }: Partial<TUser>) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link
                   href={"/dashboard/profile"}
                   className="flex flex-row gap-2 items-center"

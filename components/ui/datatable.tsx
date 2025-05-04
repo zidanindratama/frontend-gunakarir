@@ -25,6 +25,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useDataTableQueryParams } from "@/hooks/use-data-table-query-params";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
@@ -35,34 +37,22 @@ export type DataTableProps<TData, TValue> = {
     total: number;
     totalPages: number;
   };
-  isLoading?: boolean;
-  refetch?: () => void;
-  page: number;
-  onPageChange: (page: number) => void;
-  onSearchChange?: (value: string) => void;
-  searchValue?: string;
-  onFilterChange?: (key: string, value: string) => void;
-  onResetFilters?: () => void;
-  filterValues?: Record<string, string>;
   filterOptions?: Record<string, { label: string; value: string }[]>;
   searchPlaceholder?: string;
-  resetFilters?: () => void;
+  isLoading?: boolean;
 };
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   meta,
-  page,
-  onPageChange,
-  onSearchChange,
-  searchValue,
-  onFilterChange,
-  resetFilters,
-  filterValues = {},
   filterOptions,
   searchPlaceholder = "Cari...",
+  isLoading = false,
 }: DataTableProps<TData, TValue>) {
+  const { page, search, filters, updateQuery, resetFilters } =
+    useDataTableQueryParams();
+
   const table = useReactTable({
     data,
     columns,
@@ -75,22 +65,19 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full">
       <div className="flex flex-col md:flex-row gap-2 mb-4">
-        {onSearchChange && (
-          <Input
-            placeholder={searchPlaceholder}
-            value={searchValue ?? ""}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full"
-          />
-        )}
+        <Input
+          placeholder={searchPlaceholder}
+          value={search}
+          onChange={(e) => updateQuery("search", e.target.value)}
+          className="w-full"
+        />
 
-        {onFilterChange &&
-          filterOptions &&
+        {filterOptions &&
           Object.entries(filterOptions).map(([key, options]) => (
             <Select
               key={key}
-              value={filterValues?.[key] || ""}
-              onValueChange={(val) => onFilterChange(key, val)}
+              value={filters?.[key] || ""}
+              onValueChange={(val) => updateQuery(key, val)}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={`Filter ${key}`} />
@@ -105,15 +92,13 @@ export function DataTable<TData, TValue>({
             </Select>
           ))}
 
-        {resetFilters && (
-          <Button
-            variant="outline"
-            onClick={resetFilters}
-            className="w-full md:w-fit"
-          >
-            Reset
-          </Button>
-        )}
+        <Button
+          variant="outline"
+          onClick={resetFilters}
+          className="w-full md:w-fit"
+        >
+          Reset
+        </Button>
       </div>
 
       <div className="rounded-md border">
@@ -135,7 +120,17 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              [...Array(meta.limit)].map((_, idx) => (
+                <TableRow key={`skeleton-${idx}`}>
+                  {columns.map((_, colIdx) => (
+                    <TableCell key={colIdx}>
+                      <Skeleton className="h-4 w-full rounded" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
@@ -167,7 +162,7 @@ export function DataTable<TData, TValue>({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => onPageChange(page - 1)}
+            onClick={() => updateQuery("page", String(page - 1))}
             disabled={page === 1}
           >
             Sebelumnya
@@ -175,7 +170,7 @@ export function DataTable<TData, TValue>({
           <Button
             variant="outline"
             size="sm"
-            onClick={() => onPageChange(page + 1)}
+            onClick={() => updateQuery("page", String(page + 1))}
             disabled={page === meta.totalPages}
           >
             Selanjutnya

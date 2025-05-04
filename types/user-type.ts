@@ -34,6 +34,11 @@ export type TStudent = {
   organizationalExperiences: TOrganizationalExperience[];
   workExperiences: TWorkExperience[];
   educations: TEducation[];
+  user: {
+    email: string;
+    username: string;
+    image_url: string;
+  };
 
   created_at: string;
   updated_at: string;
@@ -60,6 +65,11 @@ export type TRecruiter = {
   village_id: string;
 
   jobs: TJob[];
+  user: {
+    email: string;
+    username: string;
+    image_url: string;
+  };
 
   created_at: string;
   updated_at: string;
@@ -113,9 +123,25 @@ export type TJob = {
   short_description: string;
   full_description: string;
   salary: string;
+  quota: number;
+  application_start: string;
+  application_end: string;
   province_id: string;
   city_id: string;
   status: "ACTIVE" | "INACTIVE" | "CLOSED";
   created_at: string;
   updated_at: string;
+  recruiter?: {
+    id: string;
+    company_name: string;
+    company_logo: string;
+    status: string;
+  };
+  jobMajors?: {
+    major: {
+      id: string;
+      name: string;
+      degree: string;
+    };
+  }[];
 };

@@ -104,11 +104,11 @@ export function Navbar() {
                   <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem asChild>
                       <Link href={profileUrl}>Profile</Link>
                     </DropdownMenuItem>
                     {decodedToken?.role !== "STUDENT" && (
-                      <DropdownMenuItem>
+                      <DropdownMenuItem asChild>
                         <Link href={"/dashboard"}>Dashboard</Link>
                       </DropdownMenuItem>
                     )}
