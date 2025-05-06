@@ -189,10 +189,10 @@ const SkeletonFour = () => {
           className="rounded-full h-10 w-10"
         />
         <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 dark:text-white mt-4">
-          Pengalaman pertama wawancara terasa menegangkan.
+          Wawancara pertama.
         </p>
-        <p className="border border-yellow-500 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 text-xs rounded-full px-2 py-0.5 mt-4">
-          Pemula
+        <p className="border border-yellow-500 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 text-xs rounded-full px-2 py-0.5 mt-4 text-center md:text-left">
+          Baru Mulai
         </p>
       </motion.div>
 
@@ -206,10 +206,10 @@ const SkeletonFour = () => {
           className="rounded-full h-10 w-10"
         />
         <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 dark:text-white mt-4">
-          Portofolio telah siap, menunggu peluang.
+          Portofolio siap.
         </p>
-        <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-4">
-          Siap Kerja
+        <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-4 text-center md:text-left">
+          Siap
         </p>
       </motion.div>
 
@@ -226,10 +226,10 @@ const SkeletonFour = () => {
           className="rounded-full h-10 w-10"
         />
         <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 dark:text-white mt-4">
-          Belum ada tanggapan dari lamaran.
+          Belum ada respon.
         </p>
-        <p className="border border-red-500 bg-red-100 dark:bg-red-900/20 text-red-600 text-xs rounded-full px-2 py-0.5 mt-4">
-          Butuh Dukungan
+        <p className="border border-red-500 bg-red-100 dark:bg-red-900/20 text-red-600 text-xs rounded-full px-2 py-0.5 mt-4 text-center md:text-left">
+          Perlu Bantuan
         </p>
       </motion.div>
     </motion.div>

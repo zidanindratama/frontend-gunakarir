@@ -73,8 +73,8 @@ export function FAQ() {
         </BoxReveal>
       </div>
       <p className="text-sm md:text-lg text-center text-neutral-600 dark:text-neutral-400 mb-12 mx-auto">
-        Beberapa pertanyaan yang akan dijawab kalau kami tidak sedang scroll
-        Fesnuk
+        Kami telah merangkum pertanyaan yang paling sering ditanyakan kepada
+        kami.
       </p>
 
       <div className="space-y-2 md:space-y-4">
