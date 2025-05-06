@@ -137,7 +137,8 @@ export type TJob = {
   application_end: string;
   province_id: string;
   city_id: string;
-  status: "ACTIVE" | "INACTIVE" | "CLOSED";
+  status: boolean;
+  type: string;
   created_at: string;
   updated_at: string;
   recruiter?: {

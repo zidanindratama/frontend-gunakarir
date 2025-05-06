@@ -9,6 +9,17 @@ const DataTableRekruter = () => {
   const { page, limit, search, filters } = useDataTableQueryParams();
   const status = filters.status || "";
 
+  const filterOptions = {
+    status: {
+      placeholder: "Pilih Status Rekruter",
+      options: [
+        { label: "APPROVED", value: "APPROVED" },
+        { label: "REJECTED", value: "REJECTED" },
+        { label: "PENDING", value: "PENDING" },
+      ],
+    },
+  };
+
   const { data, isLoading } = useGetData({
     queryKey: ["recruiters", `${page}-${limit}-${status}-${search}`],
     dataProtected:
@@ -31,13 +42,7 @@ const DataTableRekruter = () => {
       data={recruiters}
       meta={meta}
       isLoading={isLoading}
-      filterOptions={{
-        status: [
-          { label: "APPROVED", value: "APPROVED" },
-          { label: "REJECTED", value: "REJECTED" },
-          { label: "PENDING", value: "PENDING" },
-        ],
-      }}
+      filterOptions={filterOptions}
       searchPlaceholder="Cari rekruter"
     />
   );

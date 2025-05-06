@@ -11,19 +11,37 @@ export type Pekerjaan = {
     company_name: string;
   };
   salary: number;
-  status: "ACTIVE" | "INACTIVE" | "CLOSED";
+  type: string;
+  status: boolean;
 };
 
 export const pekerjaanColumns: ColumnDef<Pekerjaan>[] = [
   {
     accessorKey: "title",
-    header: "Judul Pekerjaan",
+    header: "Nama",
     cell: ({ row }) => <div className="font-medium">{row.original.title}</div>,
   },
   {
     accessorKey: "recruiter.company_name",
     header: "Perusahaan",
     cell: ({ row }) => row.original.recruiter.company_name,
+  },
+  {
+    accessorKey: "type",
+    header: "Tipe",
+    cell: ({ row }) => {
+      const typeMap: Record<string, string> = {
+        FULL_TIME: "Penuh Waktu",
+        PART_TIME: "Paruh Waktu",
+        INTERNSHIP: "Magang",
+        CONTRACT: "Kontrak",
+        FREELANCE: "Freelance",
+        TEMPORARY: "Sementara",
+      };
+
+      const type = row.original.type;
+      return typeMap[type] ?? type;
+    },
   },
   {
     accessorKey: "salary",
@@ -42,15 +60,15 @@ export const pekerjaanColumns: ColumnDef<Pekerjaan>[] = [
       return (
         <Badge
           className={
-            status === "ACTIVE"
+            status === true
               ? "text-green-500 border-green-500"
-              : status === "INACTIVE"
+              : status === false
               ? "text-yellow-500 border-yellow-500"
               : "text-red-500 border-red-500"
           }
           variant="outline"
         >
-          {status}
+          {status ? "Dibuka" : "Ditutup"}
         </Badge>
       );
     },

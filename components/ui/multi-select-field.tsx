@@ -28,8 +28,8 @@ type MultiSelectFieldProps<
 > = {
   options: TOption[];
   field: ControllerRenderProps<TFormValues, TFieldName>;
-  valueKey: keyof TOption & string; // ✅ fix 'never' error
-  labelKey: keyof TOption & string; // ✅ fix 'never' error
+  valueKey: keyof TOption & string;
+  labelKey: keyof TOption & string;
   placeholder?: string;
   disabled?: boolean;
   searchValue?: string;
@@ -85,14 +85,14 @@ export function MultiSelectField<
           disabled={disabled}
           variant="outline"
           role="combobox"
-          className="w-full justify-between truncate"
+          className="w-full justify-between truncate font-normal"
         >
           <span className="truncate">{displayLabel || placeholder}</span>
           <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50 shrink-0" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-full p-0 max-h-72 overflow-y-auto"
+        className="w-full p-0 max-h-72" // Hapus overflow-y-auto di sini
         align="start"
       >
         <Command>
@@ -102,6 +102,7 @@ export function MultiSelectField<
             placeholder="Cari..."
           />
           <CommandList
+            className="max-h-60 overflow-y-auto" // Tambahkan scroll di sini
             onScroll={(e) => {
               const bottom =
                 e.currentTarget.scrollHeight - e.currentTarget.scrollTop ===

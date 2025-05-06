@@ -37,7 +37,13 @@ export type DataTableProps<TData, TValue> = {
     total: number;
     totalPages: number;
   };
-  filterOptions?: Record<string, { label: string; value: string }[]>;
+  filterOptions?: Record<
+    string,
+    {
+      placeholder: string;
+      options: { label: string; value: string }[];
+    }
+  >;
   searchPlaceholder?: string;
   isLoading?: boolean;
 };
@@ -73,17 +79,19 @@ export function DataTable<TData, TValue>({
         />
 
         {filterOptions &&
-          Object.entries(filterOptions).map(([key, options]) => (
+          Object.entries(filterOptions).map(([key, config]) => (
             <Select
               key={key}
               value={filters?.[key] || ""}
               onValueChange={(val) => updateQuery(key, val)}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder={`Filter ${key}`} />
+                <SelectValue
+                  placeholder={config.placeholder || `Filter ${key}`}
+                />
               </SelectTrigger>
               <SelectContent>
-                {options.map((opt) => (
+                {config.options.map((opt) => (
                   <SelectItem key={opt.value} value={opt.value}>
                     {opt.label}
                   </SelectItem>

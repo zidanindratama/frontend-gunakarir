@@ -25,6 +25,15 @@ const DetailPekerjaan = ({ pekrjaanId }: Props) => {
   });
   const job: TJob = jobData?.data;
 
+  const typeMap: Record<string, string> = {
+    FULL_TIME: "Penuh Waktu",
+    PART_TIME: "Paruh Waktu",
+    INTERNSHIP: "Magang",
+    CONTRACT: "Kontrak",
+    FREELANCE: "Freelance",
+    TEMPORARY: "Sementara",
+  };
+
   const { provinceOptions, cityOptions } = useWilayah({
     provinceId: job?.province_id,
     cityId: job?.city_id,
@@ -67,15 +76,15 @@ const DetailPekerjaan = ({ pekrjaanId }: Props) => {
           <DataRow label="Status">
             <Badge
               className={
-                job?.status === "ACTIVE"
+                job?.status === true
                   ? "text-green-500 border-green-500"
-                  : job?.status === "INACTIVE"
+                  : job?.status === false
                   ? "text-yellow-500 border-yellow-500"
                   : "text-red-500 border-red-500"
               }
               variant="outline"
             >
-              {job?.status}
+              {job?.status ? "Dibuka" : "Ditutup"}
             </Badge>
           </DataRow>
           <DataRow label="Provinsi">{provinceName}</DataRow>
@@ -85,6 +94,9 @@ const DetailPekerjaan = ({ pekrjaanId }: Props) => {
           </DataRow>
           <DataRow label="Tanggal Berakhir">
             {new Date(job?.application_end).toLocaleDateString("id-ID")}
+          </DataRow>
+          <DataRow label="Tipe" className="md:col-span-2">
+            {typeMap[job?.type ?? ""] ?? job?.type}
           </DataRow>
           <DataRow label="Deskripsi Singkat" className="md:col-span-2">
             {job?.short_description}

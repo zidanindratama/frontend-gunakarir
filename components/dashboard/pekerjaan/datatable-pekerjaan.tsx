@@ -12,26 +12,57 @@ const DataTablePekerjaan = () => {
     queryKey: ["user-me"],
     dataProtected: "auth/me",
   });
+
   const user: TUser = userData?.data;
   const recruiterId = user?.recruiter?.id ?? "";
 
   const { page, limit, search, filters } = useDataTableQueryParams();
   const status = filters.status || "";
   const provinceId = filters.province_id || "";
+  const type = filters.type || "";
 
   const wilayah = useWilayah({});
+
+  const filterOptions = {
+    status: {
+      placeholder: "Pilih Status Pekerjaan",
+      options: [
+        { label: "Dibuka", value: "true" },
+        { label: "Ditutup", value: "false" },
+      ],
+    },
+    province_id: {
+      placeholder: "Pilih Provinsi",
+      options: wilayah.provinceOptions.map((prov) => ({
+        label: prov.name,
+        value: prov.id,
+      })),
+    },
+    type: {
+      placeholder: "Pilih Tipe Pekerjaan",
+      options: [
+        { label: "Penuh Waktu", value: "FULL_TIME" },
+        { label: "Paruh Waktu", value: "PART_TIME" },
+        { label: "Magang", value: "INTERNSHIP" },
+        { label: "Kontrak", value: "CONTRACT" },
+        { label: "Freelance", value: "FREELANCE" },
+        { label: "Sementara", value: "TEMPORARY" },
+      ],
+    },
+  };
 
   const { data, isLoading } = useGetData({
     queryKey: [
       "jobs",
-      `${page}-${limit}-${search}-${status}-${provinceId}-${recruiterId}`,
+      `${page}-${limit}-${search}-${status}-${provinceId}-${type}-${recruiterId}`,
     ],
     dataProtected:
       `jobs?page=${page}&limit=${limit}` +
       (search ? `&search=${search}` : "") +
       (status ? `&status=${status}` : "") +
       (provinceId ? `&province_id=${provinceId}` : "") +
-      (recruiterId ? `&recruiterId=${recruiterId}` : ""),
+      (type ? `&type=${type}` : "") +
+      (recruiterId ? `&recruiter_id=${recruiterId}` : ""),
   });
 
   const jobs = data?.data?.jobs ?? [];
@@ -48,18 +79,8 @@ const DataTablePekerjaan = () => {
       data={jobs}
       meta={meta}
       isLoading={isLoading}
-      searchPlaceholder="Cari lowongan pekerjaan"
-      filterOptions={{
-        status: [
-          { label: "ACTIVE", value: "ACTIVE" },
-          { label: "INACTIVE", value: "INACTIVE" },
-          { label: "CLOSED", value: "CLOSED" },
-        ],
-        province_id: wilayah.provinceOptions.map((prov) => ({
-          label: prov.name,
-          value: prov.id,
-        })),
-      }}
+      searchPlaceholder="Cari Lowongan Pekerjaan"
+      filterOptions={filterOptions}
     />
   );
 };

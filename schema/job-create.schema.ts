@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+export enum JobType {
+  FULL_TIME = "FULL_TIME",
+  PART_TIME = "PART_TIME",
+  INTERNSHIP = "INTERNSHIP",
+  CONTRACT = "CONTRACT",
+  FREELANCE = "FREELANCE",
+  TEMPORARY = "TEMPORARY",
+}
+
 export const CreateJobSchema = z
   .object({
     title: z.string().min(1, "Judul wajib diisi"),
@@ -25,6 +34,16 @@ export const CreateJobSchema = z
 
     province_id: z.string().min(1, "Provinsi wajib diisi"),
     city_id: z.string().min(1, "Kota/Kabupaten wajib diisi"),
+    status: z.boolean(),
+
+    type: z.enum([
+      "FULL_TIME",
+      "PART_TIME",
+      "INTERNSHIP",
+      "CONTRACT",
+      "FREELANCE",
+      "TEMPORARY",
+    ]),
 
     major_ids: z.array(z.string()).optional(),
   })

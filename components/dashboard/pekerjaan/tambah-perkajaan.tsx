@@ -16,6 +16,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -24,13 +31,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useWilayah } from "@/hooks/useWilayah";
 import { SelectWilayah } from "@/components/ui/select-wilayah";
 import { usePostData } from "@/hooks/use-post-data";
-import { CreateJobFormData, CreateJobSchema } from "@/schema/job-create.schema";
+import {
+  CreateJobFormData,
+  CreateJobSchema,
+  JobType,
+} from "@/schema/job-create.schema";
 import { DatePickerField } from "@/components/ui/date-picker-field";
 import { useGetData } from "@/hooks/use-get-data";
 import { TUser } from "@/types/user-type";
 import { MinimalTiptapEditor } from "@/components/minimal-tiptap";
 import { MultiSelectField } from "@/components/ui/multi-select-field";
 import { useInfiniteFetcher } from "@/hooks/use-get-infinite-data";
+import { Switch } from "@/components/ui/switch";
 
 const TambahPekerjaan = () => {
   const { data: userData } = useGetData({
@@ -42,15 +54,17 @@ const TambahPekerjaan = () => {
   const form = useForm<CreateJobFormData>({
     resolver: zodResolver(CreateJobSchema),
     defaultValues: {
-      title: "test",
-      short_description: "test",
-      full_description: "test",
+      title: "",
+      short_description: "",
+      full_description: "",
       salary: 0,
       quota: 0,
       application_start: new Date(),
       application_end: new Date(),
       province_id: "",
       city_id: "",
+      status: false,
+      type: "" as JobType,
       major_ids: [],
     },
   });
@@ -93,12 +107,91 @@ const TambahPekerjaan = () => {
             <div className="md:col-span-2">
               <FormField
                 control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Status</FormLabel>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        aria-readonly
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="md:col-span-2">
+              <FormField
+                control={form.control}
                 name="title"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Nama</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder="Nama pekerjaan" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="md:col-span-2">
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tipe Pekerjaan</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Pilih Tipe Pekerjaan" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="FULL_TIME">
+                          Penuh Waktu (Full Time)
+                        </SelectItem>
+                        <SelectItem value="PART_TIME">
+                          Paruh Waktu (Part Time)
+                        </SelectItem>
+                        <SelectItem value="INTERNSHIP">Magang</SelectItem>
+                        <SelectItem value="CONTRACT">Kontrak</SelectItem>
+                        <SelectItem value="FREELANCE">
+                          Lepas (Freelance)
+                        </SelectItem>
+                        <SelectItem value="TEMPORARY">Sementara</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="md:col-span-2">
+              <FormField
+                control={form.control}
+                name="major_ids"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Program Studi</FormLabel>
+                    <FormControl>
+                      <MultiSelectField
+                        field={field}
+                        options={majorOptions}
+                        valueKey="id"
+                        labelKey="name"
+                        placeholder="Pilih Program Studi"
+                        searchValue={search}
+                        onSearchChange={setSearch}
+                        fetchMore={fetchNextPage}
+                        hasMore={hasNextPage}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -190,31 +283,6 @@ const TambahPekerjaan = () => {
                       <Textarea
                         {...field}
                         placeholder="Deskripsi singkat pekerjaan"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="md:col-span-2">
-              <FormField
-                control={form.control}
-                name="major_ids"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Program Studi</FormLabel>
-                    <FormControl>
-                      <MultiSelectField
-                        field={field}
-                        options={majorOptions}
-                        valueKey="id"
-                        labelKey="name"
-                        placeholder="Pilih Program Studi"
-                        searchValue={search}
-                        onSearchChange={setSearch}
-                        fetchMore={fetchNextPage}
-                        hasMore={hasNextPage}
                       />
                     </FormControl>
                     <FormMessage />
