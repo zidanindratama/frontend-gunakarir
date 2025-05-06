@@ -34,7 +34,6 @@ import {
 import { useWilayah } from "@/hooks/useWilayah";
 import { useFileUploader } from "@/hooks/use-file-uploader";
 import { usePostData } from "@/hooks/use-post-data";
-import { SelectWilayah } from "@/components/ui/select-wilayah";
 import {
   RecruiterRequestFormData,
   RecruiterRequestSchema,
@@ -49,6 +48,7 @@ import { usePatchData } from "@/hooks/use-patch-data";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { SelectWilayahField } from "@/components/ui/select-wilayah-field";
 
 const FormRecruiterProfile = () => {
   const [showOtpDialog, setShowOtpDialog] = useState(false);
@@ -386,7 +386,7 @@ const FormRecruiterProfile = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Provinsi</FormLabel>
-                      <SelectWilayah
+                      <SelectWilayahField
                         value={field.value}
                         onChange={(val) => {
                           field.onChange(val);
@@ -408,7 +408,7 @@ const FormRecruiterProfile = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Kota/Kabupaten</FormLabel>
-                      <SelectWilayah
+                      <SelectWilayahField
                         value={field.value}
                         onChange={(val) => {
                           field.onChange(val);
@@ -429,7 +429,7 @@ const FormRecruiterProfile = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Kecamatan</FormLabel>
-                      <SelectWilayah
+                      <SelectWilayahField
                         value={field.value}
                         onChange={(val) => {
                           field.onChange(val);
@@ -449,7 +449,7 @@ const FormRecruiterProfile = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Kelurahan</FormLabel>
-                      <SelectWilayah
+                      <SelectWilayahField
                         value={field.value}
                         onChange={field.onChange}
                         placeholder="Pilih Kelurahan"

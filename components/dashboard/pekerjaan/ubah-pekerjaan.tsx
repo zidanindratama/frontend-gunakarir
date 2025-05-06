@@ -29,7 +29,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWilayah } from "@/hooks/useWilayah";
-import { SelectWilayah } from "@/components/ui/select-wilayah";
 import { CreateJobFormData, CreateJobSchema } from "@/schema/job-create.schema";
 import { DatePickerField } from "@/components/ui/date-picker-field";
 import { useGetData } from "@/hooks/use-get-data";
@@ -40,6 +39,7 @@ import { usePatchData } from "@/hooks/use-patch-data";
 import { useEffect, useState } from "react";
 import { TJobMajor } from "@/types/user-type";
 import { Switch } from "@/components/ui/switch";
+import { SelectWilayahField } from "@/components/ui/select-wilayah-field";
 
 const UbahPekerjaan = ({ pekerjaanId }: { pekerjaanId: string }) => {
   const [isReady, setIsReady] = useState(false);
@@ -256,7 +256,7 @@ const UbahPekerjaan = ({ pekerjaanId }: { pekerjaanId: string }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Provinsi</FormLabel>
-                  <SelectWilayah
+                  <SelectWilayahField
                     value={field.value}
                     onChange={(val) => {
                       field.onChange(val);
@@ -276,7 +276,7 @@ const UbahPekerjaan = ({ pekerjaanId }: { pekerjaanId: string }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Kota/Kabupaten</FormLabel>
-                  <SelectWilayah
+                  <SelectWilayahField
                     value={field.value}
                     onChange={field.onChange}
                     options={wilayah.cityOptions}

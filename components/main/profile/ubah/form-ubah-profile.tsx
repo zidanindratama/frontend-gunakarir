@@ -46,7 +46,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useFileUploader } from "@/hooks/use-file-uploader";
 import { useWilayah } from "@/hooks/useWilayah";
-import { SelectWilayah } from "@/components/ui/select-wilayah";
 import { EducationFormData } from "@/schema/education-schema";
 import EducationFormDialog from "./form-education";
 import ListEducation from "./list-education";
@@ -57,6 +56,7 @@ import { OrganizationalExperienceFormData } from "@/schema/organizational-experi
 import ListOrganizationalExperience from "./list-organizational-experience";
 import OrganizationalExperienceFormDialog from "./form-organizationnal-experience";
 import Link from "next/link";
+import { SelectWilayahField } from "@/components/ui/select-wilayah-field";
 
 const FormUbahProfile = () => {
   const { uploadFile } = useFileUploader();
@@ -379,7 +379,7 @@ const FormUbahProfile = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Provinsi</FormLabel>
-                        <SelectWilayah
+                        <SelectWilayahField
                           value={field.value}
                           onChange={(val) => {
                             field.onChange(val);
@@ -401,7 +401,7 @@ const FormUbahProfile = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Kota/Kabupaten</FormLabel>
-                        <SelectWilayah
+                        <SelectWilayahField
                           value={field.value}
                           onChange={(val) => {
                             field.onChange(val);
@@ -422,7 +422,7 @@ const FormUbahProfile = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Kecamatan</FormLabel>
-                        <SelectWilayah
+                        <SelectWilayahField
                           value={field.value}
                           onChange={(val) => {
                             field.onChange(val);
@@ -442,7 +442,7 @@ const FormUbahProfile = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Kelurahan</FormLabel>
-                        <SelectWilayah
+                        <SelectWilayahField
                           value={field.value}
                           onChange={field.onChange}
                           placeholder="Pilih Kelurahan"

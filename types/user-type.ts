@@ -131,7 +131,7 @@ export type TJob = {
   title: string;
   short_description: string;
   full_description: string;
-  salary: string;
+  salary: number;
   quota: number;
   application_start: string;
   application_end: string;

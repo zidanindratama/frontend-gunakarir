@@ -29,7 +29,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWilayah } from "@/hooks/useWilayah";
-import { SelectWilayah } from "@/components/ui/select-wilayah";
 import { usePostData } from "@/hooks/use-post-data";
 import {
   CreateJobFormData,
@@ -43,6 +42,7 @@ import { MinimalTiptapEditor } from "@/components/minimal-tiptap";
 import { MultiSelectField } from "@/components/ui/multi-select-field";
 import { useInfiniteFetcher } from "@/hooks/use-get-infinite-data";
 import { Switch } from "@/components/ui/switch";
+import { SelectWilayahField } from "@/components/ui/select-wilayah-field";
 
 const TambahPekerjaan = () => {
   const { data: userData } = useGetData({
@@ -242,7 +242,7 @@ const TambahPekerjaan = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Provinsi</FormLabel>
-                  <SelectWilayah
+                  <SelectWilayahField
                     value={field.value}
                     onChange={(val) => {
                       field.onChange(val);
@@ -262,7 +262,7 @@ const TambahPekerjaan = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Kota/Kabupaten</FormLabel>
-                  <SelectWilayah
+                  <SelectWilayahField
                     value={field.value}
                     onChange={field.onChange}
                     options={wilayah.cityOptions}

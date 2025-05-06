@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { FormControl } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 
 interface SelectWilayahProps {
@@ -26,7 +27,7 @@ interface SelectWilayahProps {
   disabled?: boolean;
 }
 
-export const SelectWilayah: React.FC<SelectWilayahProps> = ({
+export const SelectWilayahField: React.FC<SelectWilayahProps> = ({
   value,
   onChange,
   placeholder,
@@ -38,18 +39,20 @@ export const SelectWilayah: React.FC<SelectWilayahProps> = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          disabled={disabled}
-          className={cn(
-            "w-full justify-between",
-            !value && "text-muted-foreground"
-          )}
-        >
-          {selectedLabel || placeholder}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+        <FormControl>
+          <Button
+            variant="outline"
+            role="combobox"
+            disabled={disabled}
+            className={cn(
+              "w-full justify-between",
+              !value && "text-muted-foreground"
+            )}
+          >
+            {selectedLabel || placeholder}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </FormControl>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0" align="start">
         <Command>

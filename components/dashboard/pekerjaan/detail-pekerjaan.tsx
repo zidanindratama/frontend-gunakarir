@@ -70,7 +70,13 @@ const DetailPekerjaan = ({ pekrjaanId }: Props) => {
         <div className="grid grid-cols-1 md:grid-cols-2 text-sm border border-border divide-x divide-y rounded overflow-hidden">
           <DataRow label="Judul Pekerjaan">{job?.title}</DataRow>
           <DataRow label="Gaji">
-            Rp {parseInt(job?.salary || "0").toLocaleString()}
+            Rp{" "}
+            {job.salary
+              ? `Gaji: ${Number(job.salary).toLocaleString("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                })}`
+              : "-"}
           </DataRow>
           <DataRow label="Kuota">{job?.quota}</DataRow>
           <DataRow label="Status">
