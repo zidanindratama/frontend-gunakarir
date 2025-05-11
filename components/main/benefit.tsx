@@ -105,7 +105,6 @@ const SkeletonTwo = () => {
   }, []);
 
   if (widths.length === 0) {
-    // Optional: return null or loading skeleton while waiting for widths
     return null;
   }
 

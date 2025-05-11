@@ -11,6 +11,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,7 +27,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWilayah } from "@/hooks/useWilayah";
 import { CreateJobFormData, CreateJobSchema } from "@/schema/job-create.schema";
@@ -36,10 +36,11 @@ import { MinimalTiptapEditor } from "@/components/minimal-tiptap";
 import { MultiSelectField } from "@/components/ui/multi-select-field";
 import { useInfiniteFetcher } from "@/hooks/use-get-infinite-data";
 import { usePatchData } from "@/hooks/use-patch-data";
-import { useEffect, useState } from "react";
-import { TJobMajor } from "@/types/user-type";
 import { Switch } from "@/components/ui/switch";
 import { SelectWilayahField } from "@/components/ui/select-wilayah-field";
+import { TJobMajor } from "@/types/job-major-type";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 
 const UbahPekerjaan = ({ pekerjaanId }: { pekerjaanId: string }) => {
   const [isReady, setIsReady] = useState(false);
@@ -117,6 +118,11 @@ const UbahPekerjaan = ({ pekerjaanId }: { pekerjaanId: string }) => {
                         aria-readonly
                       />
                     </FormControl>
+                    <FormMessage />
+                    <FormDescription>
+                      Aktifkan jika pekerjaan ini tersedia dan dapat dilamar
+                      oleh kandidat.
+                    </FormDescription>
                   </FormItem>
                 )}
               />
@@ -208,6 +214,9 @@ const UbahPekerjaan = ({ pekerjaanId }: { pekerjaanId: string }) => {
                       />
                     </FormControl>
                     <FormMessage />
+                    <FormDescription>
+                      Tidak perlu diisi jika untuk semua jurusan.
+                    </FormDescription>
                   </FormItem>
                 )}
               />

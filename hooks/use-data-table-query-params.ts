@@ -10,7 +10,6 @@ export const useDataTableQueryParams = () => {
   const limit = Number(searchParams.get("limit") || "10");
   const search = searchParams.get("search") || "";
 
-  // Ambil semua filter yang ada (kecuali page, limit, search)
   const filters: Record<string, string> = {};
   searchParams.forEach((value, key) => {
     if (!["page", "limit", "search"].includes(key)) {

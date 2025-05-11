@@ -1,6 +1,5 @@
 "use client";
 
-import { BadgeCheck, Clock4, ShieldX } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -11,7 +10,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useGetData } from "@/hooks/use-get-data";
+import { TRecruiter } from "@/types/recruiter-type";
 import Link from "next/link";
+import { BadgeCheck, Clock4, ShieldX } from "lucide-react";
 
 const statusList = {
   APPROVED: {
@@ -37,7 +38,7 @@ export default function RecruiterStatusCard() {
     dataProtected: "auth/me",
   });
 
-  const recruiter = data?.data?.recruiter;
+  const recruiter: TRecruiter = data?.data?.recruiter;
 
   if (!recruiter) {
     return (
@@ -64,7 +65,7 @@ export default function RecruiterStatusCard() {
         </CardContent>
         <CardFooter>
           <Button variant="outline" className="w-full" asChild>
-            <Link href={"/dashboard/profile"}>Lengkapi Data</Link>
+            <Link href="/dashboard/profile">Lengkapi Data</Link>
           </Button>
         </CardFooter>
       </Card>
@@ -75,6 +76,12 @@ export default function RecruiterStatusCard() {
   const reason = recruiter.rejection_reason ?? "";
   const { icon, title, description } =
     statusList[status as keyof typeof statusList];
+
+  const linkHref =
+    status === "APPROVED" ? "/dashboard/pekerjaan" : "/dashboard/profile";
+
+  const linkLabel =
+    status === "APPROVED" ? "Lihat Lowongan" : "Perbarui Data Rekruter";
 
   return (
     <Card className="w-full">
@@ -94,8 +101,8 @@ export default function RecruiterStatusCard() {
         </div>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full" disabled>
-          Status: {status}
+        <Button variant="outline" className="w-full" asChild>
+          <Link href={linkHref}>{linkLabel}</Link>
         </Button>
       </CardFooter>
     </Card>

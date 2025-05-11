@@ -40,15 +40,15 @@ import {
 } from "@/schema/recruiter-request-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
-import Link from "next/link";
 import { useGetData } from "@/hooks/use-get-data";
 import { TUser } from "@/types/user-type";
 import { usePostOrPatchRecruiter } from "@/hooks/use-post-or-patch-recruiter";
 import { usePatchData } from "@/hooks/use-patch-data";
-import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SelectWilayahField } from "@/components/ui/select-wilayah-field";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 
 const FormRecruiterProfile = () => {
   const [showOtpDialog, setShowOtpDialog] = useState(false);

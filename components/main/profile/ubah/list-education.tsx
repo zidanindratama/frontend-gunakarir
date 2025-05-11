@@ -1,8 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { HiOutlinePencilSquare } from "react-icons/hi2";
-import { GoTrash } from "react-icons/go";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,6 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useState } from "react";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
+import { GoTrash } from "react-icons/go";
 
 export type Education = {
   degree: string;

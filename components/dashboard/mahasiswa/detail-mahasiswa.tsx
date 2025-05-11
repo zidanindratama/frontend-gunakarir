@@ -8,15 +8,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useGetData } from "@/hooks/use-get-data";
-import { TStudent } from "@/types/user-type";
 import DataRow from "@/components/ui/data-row";
 import { useWilayah } from "@/hooks/useWilayah";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import ListEducation from "@/components/main/profile/ubah/list-education";
 import ListOrganizationalExperience from "@/components/main/profile/ubah/list-organizational-experience";
 import ListWorkExperience from "@/components/main/profile/ubah/list-work-experience";
+import { TStudent } from "@/types/student-type";
+import Link from "next/link";
 
 type Props = {
   mahasiswaId: string;

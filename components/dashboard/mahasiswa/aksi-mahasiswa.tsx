@@ -1,5 +1,3 @@
-import { useState } from "react";
-import Link from "next/link";
 import { Trash2, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +18,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useDeleteData } from "@/hooks/use-delete-data";
+import { useState } from "react";
+import Link from "next/link";
 
 export const AksiMahasiswa = ({ mahasiswaId }: { mahasiswaId: string }) => {
   const [open, setOpen] = useState(false);

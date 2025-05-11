@@ -3,9 +3,9 @@
 import { useGetData } from "@/hooks/use-get-data";
 import { useDataTableQueryParams } from "@/hooks/use-data-table-query-params";
 import { DataTable } from "@/components/ui/datatable";
-import { pekerjaanColumns } from "./kolom-pekerjaan";
 import { useWilayah } from "@/hooks/useWilayah";
 import { TUser } from "@/types/user-type";
+import { pekerjaanColumns } from "./kolom-pekerjaan";
 
 const DataTablePekerjaan = () => {
   const { data: userData } = useGetData({

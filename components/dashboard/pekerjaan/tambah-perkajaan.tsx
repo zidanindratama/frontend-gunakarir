@@ -11,6 +11,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,7 +27,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWilayah } from "@/hooks/useWilayah";
 import { usePostData } from "@/hooks/use-post-data";
@@ -43,6 +43,7 @@ import { MultiSelectField } from "@/components/ui/multi-select-field";
 import { useInfiniteFetcher } from "@/hooks/use-get-infinite-data";
 import { Switch } from "@/components/ui/switch";
 import { SelectWilayahField } from "@/components/ui/select-wilayah-field";
+import { useForm } from "react-hook-form";
 
 const TambahPekerjaan = () => {
   const { data: userData } = useGetData({
@@ -118,6 +119,11 @@ const TambahPekerjaan = () => {
                         aria-readonly
                       />
                     </FormControl>
+                    <FormMessage />
+                    <FormDescription>
+                      Aktifkan jika pekerjaan ini tersedia dan dapat dilamar
+                      oleh kandidat.
+                    </FormDescription>
                   </FormItem>
                 )}
               />
@@ -194,6 +200,9 @@ const TambahPekerjaan = () => {
                       />
                     </FormControl>
                     <FormMessage />
+                    <FormDescription>
+                      Tidak perlu diisi jika untuk semua jurusan.
+                    </FormDescription>
                   </FormItem>
                 )}
               />

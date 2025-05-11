@@ -1,6 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,6 +11,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import MahasiswaDetail from "@/components/dashboard/mahasiswa/detail-mahasiswa";
+import { useParams } from "next/navigation";
 
 const DashboardDetailMahasiswa = () => {
   const params = useParams();

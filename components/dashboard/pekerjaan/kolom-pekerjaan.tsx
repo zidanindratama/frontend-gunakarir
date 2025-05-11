@@ -2,20 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
+import { TJob } from "@/types/job-type";
 import { AksiPekerjaan } from "./aksi-pekerjaan";
 
-export type Pekerjaan = {
-  id: string;
-  title: string;
-  recruiter: {
-    company_name: string;
-  };
-  salary: number;
-  type: string;
-  status: boolean;
-};
-
-export const pekerjaanColumns: ColumnDef<Pekerjaan>[] = [
+export const pekerjaanColumns: ColumnDef<TJob>[] = [
   {
     accessorKey: "title",
     header: "Nama",

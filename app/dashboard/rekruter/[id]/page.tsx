@@ -1,6 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import DetailRekruter from "@/components/dashboard/rekruter/detail-rekruter";
 import {
   Breadcrumb,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useParams } from "next/navigation";
 
 const DashboardDetailRekruter = () => {
   const params = useParams();

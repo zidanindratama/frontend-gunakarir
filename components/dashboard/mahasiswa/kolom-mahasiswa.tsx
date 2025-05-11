@@ -2,21 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
+import { TStudent } from "@/types/student-type";
 import { AksiMahasiswa } from "./aksi-mahasiswa";
 
-export type Mahasiswa = {
-  id: string;
-  fullname: string;
-  NPM: string;
-  phone_number: string;
-  status: "PENDING" | "APPROVED" | "REJECTED";
-  user: {
-    email: string;
-    username: string;
-  };
-};
-
-export const mahasiswaColumns: ColumnDef<Mahasiswa>[] = [
+export const mahasiswaColumns: ColumnDef<TStudent>[] = [
   {
     accessorKey: "fullname",
     header: "Nama Lengkap",

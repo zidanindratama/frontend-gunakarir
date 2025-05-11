@@ -1,8 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { HiOutlinePencilSquare } from "react-icons/hi2";
-import { GoTrash } from "react-icons/go";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,6 +9,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { format } from "date-fns";
+import { useState } from "react";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
+import { GoTrash } from "react-icons/go";
 
 export type WorkExperience = {
   company_name: string;

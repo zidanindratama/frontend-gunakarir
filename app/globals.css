@@ -400,5 +400,5 @@
 
 h1.heading-node,
 h2.heading-node {
-  @apply p-3 bg-blue-500/20 w-fit;
+  @apply p-3 bg-blue-500/20  dark:bg-blue-800 text-blue-700 dark:text-blue-100 w-fit text-lg;
 }

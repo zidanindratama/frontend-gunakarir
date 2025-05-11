@@ -89,8 +89,8 @@ export function FAQ() {
                     scale: 1,
                     transition: {
                       duration: 0.5,
-                      delay: index * 0.15, // Sequential delay based on item index
-                      ease: [0.22, 1, 0.36, 1], // Custom spring-like easing
+                      delay: index * 0.15,
+                      ease: [0.22, 1, 0.36, 1],
                     },
                   }
                 : {}

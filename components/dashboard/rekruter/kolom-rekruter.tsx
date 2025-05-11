@@ -2,20 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
+import { TRecruiter } from "@/types/recruiter-type";
 import AksiRekruter from "./aksi-rekruter";
 
-export type Recruiter = {
-  id: string;
-  company_name: string;
-  NPWP: string;
-  status: "PENDING" | "APPROVED" | "REJECTED";
-  user: {
-    email: string;
-    username: string;
-  };
-};
-
-export const recruiterColumns: ColumnDef<Recruiter>[] = [
+export const recruiterColumns: ColumnDef<TRecruiter>[] = [
   {
     accessorKey: "company_name",
     header: "Nama Perusahaan",

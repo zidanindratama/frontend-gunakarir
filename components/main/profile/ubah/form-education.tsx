@@ -33,11 +33,11 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useGetData } from "@/hooks/use-get-data";
-import { StudyProgramWithMajors } from "@/types/study-program-with-majors";
 import { cn } from "@/lib/utils";
 import { EducationFormData, EducationSchema } from "@/schema/education-schema";
-import { useForm } from "react-hook-form";
+import { TFacultyMajor } from "@/types/faculty-major-type";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 const DEGREE_OPTIONS = ["D3", "S1", "S2", "S3"];
 
@@ -74,12 +74,12 @@ export default function EducationFormDialog({
     dataProtected: "faculties",
   });
 
-  const facultiesDataWithMajors: StudyProgramWithMajors[] =
+  const facultiesDataWithMajors: TFacultyMajor[] =
     facultiesData?.data?.data ?? [];
 
   const filteredMajors = useMemo(() => {
     const matchedProgram = facultiesDataWithMajors.find(
-      (p: StudyProgramWithMajors) => p.name === selectedFaculty
+      (p: TFacultyMajor) => p.name === selectedFaculty
     );
     return matchedProgram?.majors ?? [];
   }, [selectedFaculty, facultiesDataWithMajors]);

@@ -18,9 +18,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useDeleteData } from "@/hooks/use-delete-data";
 import { Trash2, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
-import { useDeleteData } from "@/hooks/use-delete-data";
 import { useState } from "react";
 
 type Props = {

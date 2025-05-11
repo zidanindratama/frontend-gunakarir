@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
   MapPin,
   Eye,
@@ -10,7 +11,6 @@ import {
   CalendarX,
   CheckCircle2,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export const lamaranStatus = {
   TERKIRIM: {
@@ -55,7 +55,7 @@ export const lamaranStatus = {
   },
   DITOLAK: {
     label: "Ditolak",
-    color: "text-red-700", // sebelumnya abu-abu, sekarang merah
+    color: "text-red-700",
     icon: XCircle,
   },
 };

@@ -11,7 +11,7 @@ import { useGetData } from "@/hooks/use-get-data";
 import DataRow from "@/components/ui/data-row";
 import { Badge } from "@/components/ui/badge";
 import { useWilayah } from "@/hooks/useWilayah";
-import { TJob } from "@/types/user-type";
+import { TJob } from "@/types/job-type";
 import Image from "next/image";
 
 type Props = {
@@ -62,7 +62,7 @@ const DetailPekerjaan = ({ pekrjaanId }: Props) => {
             />
           )}
           <div className="text-center md:text-left">
-            <h1 className="text-2xl md:text-3xl font-bold text-neutral-800 dark:text-neutral-100 mb-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-neutral-800 dark:text-neutral-100">
               {job?.recruiter?.company_name}
             </h1>
           </div>
@@ -71,7 +71,7 @@ const DetailPekerjaan = ({ pekrjaanId }: Props) => {
           <DataRow label="Judul Pekerjaan">{job?.title}</DataRow>
           <DataRow label="Gaji">
             Rp{" "}
-            {job.salary
+            {job?.salary
               ? `Gaji: ${Number(job.salary).toLocaleString("id-ID", {
                   style: "currency",
                   currency: "IDR",
