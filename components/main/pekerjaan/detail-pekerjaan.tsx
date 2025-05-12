@@ -35,7 +35,7 @@ const DetailPekerjaan = ({ jobId }: Props) => {
     dataProtected: `applications/${user?.student?.id}`,
     successMessage:
       "Lamaran berhasil dikirim! Silakan cek status lamaranmu di halaman Profil.",
-    backUrl: "/dashboard/profile",
+    backUrl: "/profile",
   });
 
   const wilayah = useWilayah({});
@@ -106,7 +106,7 @@ const DetailPekerjaan = ({ jobId }: Props) => {
             </div>
           </div>
 
-          <div className="md:col-span-1 flex flex-col">
+          <div className="md:col-span-1 flex flex-col md:sticky md:top-32 self-start">
             {isLoading ? (
               <Skeleton className="h-12 w-full rounded-md" />
             ) : (
@@ -119,7 +119,7 @@ const DetailPekerjaan = ({ jobId }: Props) => {
               </Button>
             )}
 
-            <div className="flex flex-col gap-6 mt-10">
+            <div className="grid grid-cols-2 md:grid-cols-1 gap-6 mt-10">
               {/* Kategori */}
               <div className="flex flex-col gap-3">
                 <h1 className="font-semibold">Kategori Lowongan:</h1>
@@ -157,6 +157,30 @@ const DetailPekerjaan = ({ jobId }: Props) => {
                           currency: "IDR",
                         })}`
                       : "-"}
+                  </h4>
+                )}
+              </div>
+
+              {/* Kuota */}
+              <div className="flex flex-col gap-3">
+                <h1 className="font-semibold">Kuota:</h1>
+                {isLoading ? (
+                  <Skeleton className="h-6 w-24 rounded" />
+                ) : (
+                  <h4 className="text-xs bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 px-2 py-1 rounded font-semibold w-fit">
+                    {job?.quota ?? "-"} orang
+                  </h4>
+                )}
+              </div>
+
+              {/* Jumlah Pelamar */}
+              <div className="flex flex-col gap-3">
+                <h1 className="font-semibold">Jumlah Pelamar:</h1>
+                {isLoading ? (
+                  <Skeleton className="h-6 w-24 rounded" />
+                ) : (
+                  <h4 className="text-xs bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 px-2 py-1 rounded font-semibold w-fit">
+                    {job?.applications?.length ?? 0} orang
                   </h4>
                 )}
               </div>

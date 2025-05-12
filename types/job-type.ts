@@ -1,5 +1,6 @@
 import { TRecruiter } from "./recruiter-type";
 import { TJobMajor } from "./job-major-type";
+import { TApplication } from "./application-type";
 
 export type JobType =
   | "FULL_TIME"
@@ -27,4 +28,5 @@ export type TJob = {
 
   recruiter: TRecruiter;
   jobMajors: TJobMajor[];
+  applications?: TApplication[];
 };

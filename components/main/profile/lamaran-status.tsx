@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import {
   MapPin,
   Eye,
-  FileCheck2,
   XCircle,
   CalendarClock,
   CalendarCheck,
@@ -18,20 +17,10 @@ export const lamaranStatus = {
     color: "text-yellow-600",
     icon: MapPin,
   },
-  REVIEW: {
-    label: "Review",
+  MENUNGGU_TINJAUAN: {
+    label: "Menunggu Tinjauan",
     color: "text-blue-600",
     icon: Eye,
-  },
-  LOLOS_SCREENING: {
-    label: "Lolos Screening",
-    color: "text-cyan-700",
-    icon: FileCheck2,
-  },
-  TIDAK_LOLOS_SCREENING: {
-    label: "Tidak Lolos Screening",
-    color: "text-red-600",
-    icon: FileCheck2,
   },
   UNDANGAN_INTERVIEW: {
     label: "Undangan Interview",

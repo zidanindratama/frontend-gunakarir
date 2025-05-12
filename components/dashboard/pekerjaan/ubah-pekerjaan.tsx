@@ -29,8 +29,6 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWilayah } from "@/hooks/useWilayah";
-import { CreateJobFormData, CreateJobSchema } from "@/schema/job-create.schema";
-import { DatePickerField } from "@/components/ui/date-picker-field";
 import { useGetData } from "@/hooks/use-get-data";
 import { MinimalTiptapEditor } from "@/components/minimal-tiptap";
 import { MultiSelectField } from "@/components/ui/multi-select-field";
@@ -41,6 +39,8 @@ import { SelectWilayahField } from "@/components/ui/select-wilayah-field";
 import { TJobMajor } from "@/types/job-major-type";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { CreateJobFormData, CreateJobSchema } from "@/schema/job-create-schema";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 
 const UbahPekerjaan = ({ pekerjaanId }: { pekerjaanId: string }) => {
   const [isReady, setIsReady] = useState(false);
@@ -247,17 +247,39 @@ const UbahPekerjaan = ({ pekerjaanId }: { pekerjaanId: string }) => {
                 </FormItem>
               )}
             />
-            <DatePickerField
+            <FormField
               control={form.control}
               name="application_start"
-              label="Tanggal Mulai Lamar"
-              disabledBefore1900
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-2">
+                  <FormLabel htmlFor="datetime">Tanggal Mulai Lamar</FormLabel>
+                  <FormControl>
+                    <DateTimePicker
+                      placeholder="Pilih tanggal mulai lamar"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <DatePickerField
+            <FormField
               control={form.control}
               name="application_end"
-              label="Tanggal Akhir Lamar"
-              disabledBefore1900
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-2">
+                  <FormLabel htmlFor="datetime">Tanggal Akhir Lamar</FormLabel>
+                  <FormControl>
+                    <DateTimePicker
+                      placeholder="Pilih tanggal akhir lamar"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <FormField
               control={form.control}

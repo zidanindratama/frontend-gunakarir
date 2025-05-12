@@ -18,6 +18,21 @@ const PesanStatusRejected = ({ application }: Props) => {
   const recruiterName = recruiter?.user?.username ?? "Tim Rekrutmen";
   const recruiterEmail = recruiter?.user?.email ?? "hrd@example.com";
 
+  const currentStage =
+    application.stages?.[application.stages.length - 1]?.stage_type ??
+    "CV_SCREENING";
+
+  const lastStage = application.stages?.[application.stages.length - 1];
+  const notes = lastStage?.notes;
+
+  const stageLabels: Record<string, string> = {
+    CV_SCREENING: "tahapan CV Screening",
+    HR_INTERVIEW: "tahapan Interview HR",
+    MANAGEMENT_INTERVIEW: "tahapan Interview Manajemen",
+  };
+
+  const currentStageLabel = stageLabels[currentStage] ?? "proses seleksi";
+
   return (
     <div className="space-y-6">
       <div>
@@ -38,10 +53,20 @@ const PesanStatusRejected = ({ application }: Props) => {
         </p>
 
         <p>
-          Setelah melakukan evaluasi yang cermat terhadap seluruh kandidat, kami
-          telah memutuskan untuk melanjutkan proses dengan kandidat lain yang
-          lebih sesuai dengan kualifikasi dan kebutuhan posisi tersebut.
+          Berdasarkan hasil evaluasi pada <strong>{currentStageLabel}</strong>,
+          kami memutuskan untuk tidak melanjutkan proses rekrutmen Anda ke tahap
+          selanjutnya.
         </p>
+
+        {notes && (
+          <p>
+            <em>Catatan dari tim rekrutmen:</em>
+            <br />
+            <span className="italic text-muted-foreground">
+              &quot;{notes}&quot;
+            </span>
+          </p>
+        )}
 
         <p>
           Kami akan menyimpan informasi Anda di database kami, dan akan

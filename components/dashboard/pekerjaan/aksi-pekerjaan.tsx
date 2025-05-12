@@ -1,3 +1,5 @@
+"use client";
+
 import { useDeleteData } from "@/hooks/use-delete-data";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,8 +46,13 @@ export function AksiPekerjaan({ pekerjaanId }: Props) {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Aksi</DropdownMenuLabel>
           <DropdownMenuItem asChild>
-            <Link href={`/dashboard/pekerjaan/${pekerjaanId}`}>
+            <Link href={`/pekerjaan/${pekerjaanId}`} target="_blank">
               Lihat Detail
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={`/dashboard/pekerjaan/${pekerjaanId}`}>
+              Lihat Tahapan Rekrutmen
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>

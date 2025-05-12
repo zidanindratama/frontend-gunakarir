@@ -4,9 +4,7 @@ import { ApplicationStatus } from "@/types/application-type";
 export const statusMap: Record<ApplicationStatus, keyof typeof lamaranStatus> =
   {
     SUBMITTED: "TERKIRIM",
-    UNDER_REVIEW: "REVIEW",
-    PASSED_SCREENING: "LOLOS_SCREENING",
-    FAILED_SCREENING: "TIDAK_LOLOS_SCREENING",
+    PENDING: "MENUNGGU_TINJAUAN",
     INTERVIEW_INVITED: "UNDANGAN_INTERVIEW",
     CONFIRMED_INTERVIEW: "AKAN_HADIR_INTERVIEW",
     DECLINED_INTERVIEW: "TIDAK_HADIR_INTERVIEW",

@@ -28,7 +28,6 @@ const MahasiswaDetail = ({ mahasiswaId }: Props) => {
     dataProtected: `students/${mahasiswaId}`,
   });
   const student: TStudent = mahasiswaData?.data;
-  console.log(student);
 
   const { provinceOptions, cityOptions, districtOptions, villageOptions } =
     useWilayah({

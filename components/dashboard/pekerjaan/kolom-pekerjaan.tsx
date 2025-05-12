@@ -53,7 +53,7 @@ export const pekerjaanColumns: ColumnDef<TJob>[] = [
             status === true
               ? "text-green-500 border-green-500"
               : status === false
-              ? "text-yellow-500 border-yellow-500"
+              ? "text-red-500 border-red-500"
               : "text-red-500 border-red-500"
           }
           variant="outline"

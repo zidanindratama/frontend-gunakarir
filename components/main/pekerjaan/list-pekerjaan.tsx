@@ -75,6 +75,7 @@ const ListPekerjaan = () => {
     province_id: selectedProvinceId,
     recruiter_id: selectedRecruiterId || "",
     type: selectedJobType,
+    status: "true",
   });
 
   const { data: jobsData, isLoading } = useGetData({

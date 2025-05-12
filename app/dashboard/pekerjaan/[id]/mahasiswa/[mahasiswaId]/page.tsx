@@ -1,7 +1,5 @@
 "use client";
 
-import FormAdminProfile from "@/components/dashboard/profile/form-admin-profile";
-import FormRecruiterProfile from "@/components/dashboard/profile/form-recruiter-profile";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,16 +10,13 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useGetData } from "@/hooks/use-get-data";
-import { TUser } from "@/types/user-type";
+import MahasiswaDetail from "@/components/dashboard/mahasiswa/detail-mahasiswa";
+import { useParams } from "next/navigation";
 
-const DashboardProfile = () => {
-  const { data: userData, isLoading } = useGetData({
-    queryKey: ["user-me"],
-    dataProtected: "auth/me",
-  });
-  const user: TUser = userData?.data;
+const DashboardDetailMahasiswa = () => {
+  const params = useParams();
+  const pekerjaanId = params.id as string;
+  const mahasiswaId = params.mahasiswaId as string;
 
   return (
     <section>
@@ -38,28 +33,24 @@ const DashboardProfile = () => {
                 <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
+              <BreadcrumbItem className="hidden md:block">
+                <BreadcrumbLink href={`/dashboard/pekerjaan/${pekerjaanId}`}>
+                  Pekerjaan
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>Profile</BreadcrumbPage>
+                <BreadcrumbPage>Mahasiswa</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </div>
       </header>
-
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        {isLoading ? (
-          <div className="flex flex-col gap-4">
-            <Skeleton className="h-[300px] rounded-xl" />
-            <Skeleton className="h-[80px] rounded-xl" />
-          </div>
-        ) : user?.role === "ADMIN" ? (
-          <FormAdminProfile />
-        ) : (
-          <FormRecruiterProfile />
-        )}
+        <MahasiswaDetail mahasiswaId={mahasiswaId} />
       </div>
     </section>
   );
 };
 
-export default DashboardProfile;
+export default DashboardDetailMahasiswa;

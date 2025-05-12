@@ -5,14 +5,22 @@ import { TInterview } from "./interview-type";
 
 export type ApplicationStatus =
   | "SUBMITTED"
-  | "UNDER_REVIEW"
-  | "PASSED_SCREENING"
-  | "FAILED_SCREENING"
+  | "PENDING"
   | "INTERVIEW_INVITED"
   | "CONFIRMED_INTERVIEW"
   | "DECLINED_INTERVIEW"
   | "ACCEPTED"
   | "REJECTED";
+
+export enum ApplicationStatusEnum {
+  SUBMITTED = "SUBMITTED",
+  PENDING = "PENDING",
+  INTERVIEW_INVITED = "INTERVIEW_INVITED",
+  CONFIRMED_INTERVIEW = "CONFIRMED_INTERVIEW",
+  DECLINED_INTERVIEW = "DECLINED_INTERVIEW",
+  ACCEPTED = "ACCEPTED",
+  REJECTED = "REJECTED",
+}
 
 export type TApplication = {
   id: string;

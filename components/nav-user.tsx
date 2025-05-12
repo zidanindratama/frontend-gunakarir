@@ -36,6 +36,7 @@ export function NavUser({ username, image_url, email }: Partial<TUser>) {
     Cookies.remove("access_token");
     signout();
   };
+  console.log(image_url);
 
   return (
     <SidebarMenu>

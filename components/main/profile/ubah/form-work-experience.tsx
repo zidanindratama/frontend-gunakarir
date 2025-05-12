@@ -24,9 +24,9 @@ import {
   WorkExperienceFormData,
   WorkExperienceSchema,
 } from "@/schema/work-experience-schema";
-import { DatePickerField } from "@/components/ui/date-picker-field";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 
 export default function WorkExperienceFormDialog({
   open,
@@ -117,12 +117,22 @@ export default function WorkExperienceFormDialog({
                 </FormItem>
               )}
             />
-            <DatePickerField
+            <FormField
               control={form.control}
               name="start_date"
-              label="Tanggal Mulai"
-              disabledBefore1900
-              disableFuture
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-2">
+                  <FormLabel htmlFor="datetime">Tanggal Mulai</FormLabel>
+                  <FormControl>
+                    <DateTimePicker
+                      placeholder="Pilih tanggal mulai"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <FormField
               control={form.control}
@@ -144,12 +154,23 @@ export default function WorkExperienceFormDialog({
                 </FormItem>
               )}
             />
-            <DatePickerField
+            <FormField
               control={form.control}
               name="end_date"
-              label="Tanggal Selesai"
-              disabledBefore1900
-              disabled={form.watch("ongoing")}
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-2">
+                  <FormLabel htmlFor="datetime">Tanggal Selesai</FormLabel>
+                  <FormControl>
+                    <DateTimePicker
+                      placeholder="Pilih tanggal akhir"
+                      value={field.value}
+                      onChange={field.onChange}
+                      disabled={form.watch("ongoing")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <FormField
               control={form.control}

@@ -26,7 +26,6 @@ import {
   PaginationNext,
   PaginationLink,
 } from "@/components/ui/pagination";
-
 import { TApplication } from "@/types/application-type";
 import { TJob } from "@/types/job-type";
 import { getJobTypeLabel } from "@/helpers/get-job-type-label";
@@ -136,8 +135,15 @@ const MainProfile = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="SUBMITTED">Terkirim</SelectItem>
+                      <SelectItem value="PENDING">Menunggu Tinjauan</SelectItem>
                       <SelectItem value="INTERVIEW_INVITED">
                         Undangan Interview
+                      </SelectItem>
+                      <SelectItem value="CONFIRMED_INTERVIEW">
+                        Hadir Interview
+                      </SelectItem>
+                      <SelectItem value="DECLINED_INTERVIEW">
+                        Tolak Undangan Interview
                       </SelectItem>
                       <SelectItem value="ACCEPTED">Diterima</SelectItem>
                       <SelectItem value="REJECTED">Ditolak</SelectItem>
@@ -327,7 +333,10 @@ const MainProfile = () => {
           </SheetHeader>
           <div className="p-6 w-full grid gap-10">
             <CardPekerjaan job={selectedApplication?.job ?? ({} as TJob)} />
-            <PesanStatus application={selectedApplication!} />
+            <PesanStatus
+              application={selectedApplication!}
+              onCloseDrawer={() => setOpenDrawer(false)}
+            />
           </div>
         </SheetContent>
       </Sheet>

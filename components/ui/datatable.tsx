@@ -67,6 +67,8 @@ export function DataTable<TData, TValue>({
     manualPagination: true,
     pageCount: meta.totalPages,
   });
+  const isLastPage = page === meta.totalPages || data.length === 0;
+  const isFirstPage = page === 1;
 
   return (
     <div className="w-full">
@@ -75,7 +77,7 @@ export function DataTable<TData, TValue>({
           placeholder={searchPlaceholder}
           value={search}
           onChange={(e) => updateQuery("search", e.target.value)}
-          className="w-full"
+          className="w-full text-sm"
         />
 
         {filterOptions &&
@@ -171,7 +173,7 @@ export function DataTable<TData, TValue>({
             variant="outline"
             size="sm"
             onClick={() => updateQuery("page", String(page - 1))}
-            disabled={page === 1}
+            disabled={isFirstPage}
           >
             Sebelumnya
           </Button>
@@ -179,7 +181,7 @@ export function DataTable<TData, TValue>({
             variant="outline"
             size="sm"
             onClick={() => updateQuery("page", String(page + 1))}
-            disabled={page === meta.totalPages}
+            disabled={isLastPage}
           >
             Selanjutnya
           </Button>

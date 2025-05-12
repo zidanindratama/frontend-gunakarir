@@ -14,6 +14,18 @@ const PesanStatusUnderReview = ({ application }: Props) => {
   const recruiterName = recruiter?.user?.username ?? "Tim Rekrutmen";
   const recruiterEmail = recruiter?.user?.email;
 
+  const currentStage =
+    application.stages?.[application.stages.length - 1]?.stage_type ??
+    "CV_SCREENING";
+
+  const stageLabels: Record<string, string> = {
+    CV_SCREENING: "CV Screening",
+    HR_INTERVIEW: "Interview HR",
+    MANAGEMENT_INTERVIEW: "Interview Manajemen",
+  };
+
+  const currentStageLabel = stageLabels[currentStage] ?? "Proses Review";
+
   return (
     <div className="space-y-6">
       <div>
@@ -29,7 +41,8 @@ const PesanStatusUnderReview = ({ application }: Props) => {
         <p>
           Kami ingin menginformasikan bahwa lamaran Anda untuk posisi{" "}
           <strong>{jobTitle}</strong> di <strong>{companyName}</strong> saat ini
-          sedang dalam tahap review oleh tim rekrutmen kami.
+          sedang dalam tahap <strong>{currentStageLabel}</strong> dan sedang
+          direview oleh tim rekrutmen kami.
         </p>
 
         <p>

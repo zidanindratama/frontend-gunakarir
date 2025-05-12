@@ -1,6 +1,7 @@
 "use client";
 
 import { getJobTypeLabel } from "@/helpers/get-job-type-label";
+import { getTruncatedText } from "@/helpers/get-truncated-text";
 import { TJob } from "@/types/job-type";
 import { useWilayah } from "@/hooks/useWilayah";
 import { HiOutlineMapPin } from "react-icons/hi2";
@@ -20,11 +21,8 @@ const CardPekerjaan = ({ job }: Props) => {
   return (
     <Link href={`/pekerjaan/${job.id}`}>
       <div className="border rounded-lg p-4 space-y-2 bg-white dark:bg-neutral-900 dark:border-neutral-700 shadow-sm hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors duration-200">
-        <div className="flex justify-between items-center">
-          <h3 className="font-semibold text-lg text-black dark:text-white">
-            {job.title}
-          </h3>
-          <span className="text-sm font-medium text-muted-foreground">
+        <div className="flex flex-col gap-1 lg:flex-row lg:justify-between lg:items-center">
+          <span className="text-sm font-medium text-muted-foreground order-1 sm:order-none">
             {job.salary
               ? `Gaji: ${Number(job.salary).toLocaleString("id-ID", {
                   style: "currency",
@@ -32,6 +30,12 @@ const CardPekerjaan = ({ job }: Props) => {
                 })}`
               : "-"}
           </span>
+          <h3
+            className="font-semibold text-lg text-black dark:text-white order-2 sm:order-none"
+            title={job.title}
+          >
+            {getTruncatedText(job.title)}
+          </h3>
         </div>
 
         <div className="flex gap-2 flex-wrap">
