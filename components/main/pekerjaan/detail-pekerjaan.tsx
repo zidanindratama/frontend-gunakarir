@@ -6,7 +6,7 @@ import { getJobTypeLabel } from "@/helpers/get-job-type-label";
 import { useGetData } from "@/hooks/use-get-data";
 import { usePostData } from "@/hooks/use-post-data";
 import { useWilayah } from "@/hooks/useWilayah";
-import { TJob } from "@/types/job-type";
+import { TJobWithApplicants } from "@/types/job-type";
 import { TUser } from "@/types/user-type";
 import Image from "next/image";
 import React from "react";
@@ -27,7 +27,7 @@ const DetailPekerjaan = ({ jobId }: Props) => {
   });
 
   const user: TUser = userData?.data;
-  const job: TJob = jobData?.data;
+  const job: TJobWithApplicants = jobData?.data;
   const isDisabled = !user || user.role !== "STUDENT";
 
   const { mutate: applyJob } = usePostData({
@@ -180,7 +180,7 @@ const DetailPekerjaan = ({ jobId }: Props) => {
                   <Skeleton className="h-6 w-24 rounded" />
                 ) : (
                   <h4 className="text-xs bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 px-2 py-1 rounded font-semibold w-fit">
-                    {job?.applications?.length ?? 0} orang
+                    {job._count.applications ?? 0} orang
                   </h4>
                 )}
               </div>

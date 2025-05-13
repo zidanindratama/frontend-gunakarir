@@ -40,6 +40,7 @@ import { LamaranStatusBadge } from "./lamaran-status";
 import { motion } from "framer-motion";
 import CardPekerjaan from "../pekerjaan/card-pekerjaan";
 import PesanStatus from "./pesan-lamaran/pesan-status";
+import NotFoundContent from "../not-found-content";
 
 const MainProfile = () => {
   const [selectedApplication, setSelectedApplication] =
@@ -91,7 +92,10 @@ const MainProfile = () => {
         <div className="bg-white dark:bg-neutral-900 border p-8 rounded-lg shadow-sm">
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
             <Avatar className="w-24 h-24 md:w-32 md:h-32">
-              <AvatarImage src={user?.image_url} />
+              <AvatarImage
+                src={user?.image_url}
+                className="object-cover w-full h-full"
+              />
               <AvatarFallback className="text-xl">GN</AvatarFallback>
             </Avatar>
             <div className="text-center md:text-left">
@@ -156,122 +160,125 @@ const MainProfile = () => {
               </div>
             </div>
             <div className="flex flex-col gap-5">
-              {isLoading
-                ? [...Array(5)].map((_, index) => (
-                    <div
-                      key={index}
-                      className="border p-6 rounded-2xl bg-white dark:bg-neutral-900 shadow-sm space-y-4"
-                    >
-                      <Skeleton className="w-3/4 h-6 rounded" />
-                      <div className="flex gap-2">
-                        <Skeleton className="w-24 h-5 rounded" />
-                        <Skeleton className="w-32 h-5 rounded" />
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <Skeleton className="w-16 h-16 rounded-md" />
-                        <div className="space-y-2 w-full">
-                          <Skeleton className="w-1/2 h-4 rounded" />
-                          <Skeleton className="w-1/3 h-4 rounded" />
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center pt-4 border-t">
-                        <div className="space-y-2">
-                          <Skeleton className="w-20 h-4 rounded" />
-                          <Skeleton className="w-24 h-4 rounded" />
-                        </div>
-                        <Skeleton className="w-32 h-10 rounded" />
+              {isLoading ? (
+                [...Array(5)].map((_, index) => (
+                  <div
+                    key={index}
+                    className="border p-6 rounded-2xl bg-white dark:bg-neutral-900 shadow-sm space-y-4"
+                  >
+                    <Skeleton className="w-3/4 h-6 rounded" />
+                    <div className="flex gap-2">
+                      <Skeleton className="w-24 h-5 rounded" />
+                      <Skeleton className="w-32 h-5 rounded" />
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Skeleton className="w-16 h-16 rounded-md" />
+                      <div className="space-y-2 w-full">
+                        <Skeleton className="w-1/2 h-4 rounded" />
+                        <Skeleton className="w-1/3 h-4 rounded" />
                       </div>
                     </div>
-                  ))
-                : myApplications?.map((application, index) => {
-                    return (
-                      <motion.div
-                        className="bg-white dark:bg-neutral-900 border p-6 rounded-2xl shadow-sm"
-                        key={application.id}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{
-                          duration: 0.8,
-                          delay: index * 0.4,
-                        }}
-                      >
-                        <div className="flex flex-col md:flex-row justify-between gap-6">
-                          <div className="flex-1">
-                            <h2 className="text-lg md:text-xl font-semibold mb-2">
-                              {application.job?.title}
-                            </h2>
-                            <div className="flex flex-wrap gap-3 items-center mb-4">
-                              <span className="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 text-sm rounded">
-                                {getJobTypeLabel(application.job?.type ?? "")}
-                              </span>
-                              <span className="text-sm text-muted-foreground">
-                                Gaji:{" "}
-                                {application?.job?.salary
-                                  ? `${Number(
-                                      application?.job?.salary
-                                    ).toLocaleString("id-ID", {
-                                      style: "currency",
-                                      currency: "IDR",
-                                    })}`
-                                  : "-"}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-4">
-                              {application.job?.recruiter.company_logo && (
-                                <Image
-                                  src={application.job?.recruiter.company_logo}
-                                  alt={application.job?.recruiter.company_name}
-                                  width={64}
-                                  height={64}
-                                  className="rounded-md"
-                                />
+                    <div className="flex justify-between items-center pt-4 border-t">
+                      <div className="space-y-2">
+                        <Skeleton className="w-20 h-4 rounded" />
+                        <Skeleton className="w-24 h-4 rounded" />
+                      </div>
+                      <Skeleton className="w-32 h-10 rounded" />
+                    </div>
+                  </div>
+                ))
+              ) : myApplications?.length > 0 ? (
+                myApplications.map((application, index) => (
+                  <motion.div
+                    className="bg-white dark:bg-neutral-900 border p-6 rounded-2xl shadow-sm"
+                    key={application.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                      duration: 0.8,
+                      delay: index * 0.4,
+                    }}
+                  >
+                    <div className="flex flex-col md:flex-row justify-between gap-6">
+                      <div className="flex-1">
+                        <h2 className="text-lg md:text-xl font-semibold mb-2">
+                          {application.job?.title}
+                        </h2>
+                        <div className="flex flex-wrap gap-3 items-center mb-4">
+                          <span className="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 text-sm rounded">
+                            {getJobTypeLabel(application.job?.type ?? "")}
+                          </span>
+                          <span className="text-sm text-muted-foreground">
+                            Gaji:{" "}
+                            {application?.job?.salary
+                              ? `${Number(
+                                  application?.job?.salary
+                                ).toLocaleString("id-ID", {
+                                  style: "currency",
+                                  currency: "IDR",
+                                })}`
+                              : "-"}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          {application.job?.recruiter.company_logo && (
+                            <Image
+                              src={application.job?.recruiter.company_logo}
+                              alt={application.job?.recruiter.company_name}
+                              width={64}
+                              height={64}
+                              className="rounded-md"
+                            />
+                          )}
+                          <div>
+                            <h3 className="font-medium">
+                              {application.job?.recruiter.company_name}
+                            </h3>
+                            <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                              <MapPin className="w-4 h-4" />
+                              {getProvinceName(
+                                application.job?.province_id ?? ""
                               )}
-                              <div>
-                                <h3 className="font-medium">
-                                  {application.job?.recruiter.company_name}
-                                </h3>
-                                <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                                  <MapPin className="w-4 h-4" />
-                                  {getProvinceName(
-                                    application.job?.province_id ?? ""
-                                  )}
-                                </div>
-                              </div>
                             </div>
-                          </div>
-                          <div className="md:w-1/3 border-t md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-6 flex flex-col gap-3">
-                            <div>
-                              <h4 className="font-semibold text-muted-foreground mb-1">
-                                Status
-                              </h4>
-                              <LamaranStatusBadge
-                                type={getLamaranStatusKey(application.status)}
-                              />
-                            </div>
-                            <p className="text-sm text-muted-foreground">
-                              {new Date(
-                                application.applied_at
-                              ).toLocaleDateString("id-ID", {
-                                day: "numeric",
-                                month: "long",
-                                year: "numeric",
-                              })}
-                            </p>
-                            <Button
-                              variant="outline"
-                              className="w-full"
-                              onClick={() => {
-                                setSelectedApplication(application);
-                                setOpenDrawer(true);
-                              }}
-                            >
-                              Lihat Detail
-                            </Button>
                           </div>
                         </div>
-                      </motion.div>
-                    );
-                  })}
+                      </div>
+                      <div className="md:w-1/3 border-t md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-6 flex flex-col gap-3">
+                        <div>
+                          <h4 className="font-semibold text-muted-foreground mb-1">
+                            Status
+                          </h4>
+                          <LamaranStatusBadge
+                            type={getLamaranStatusKey(application.status)}
+                          />
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          {new Date(application.applied_at).toLocaleDateString(
+                            "id-ID",
+                            {
+                              day: "numeric",
+                              month: "long",
+                              year: "numeric",
+                            }
+                          )}
+                        </p>
+                        <Button
+                          variant="outline"
+                          className="w-full"
+                          onClick={() => {
+                            setSelectedApplication(application);
+                            setOpenDrawer(true);
+                          }}
+                        >
+                          Lihat Detail
+                        </Button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <NotFoundContent message="Belum ada lamaran yang dikirim." />
+              )}
 
               {totalPages > 1 && (
                 <Pagination className="mt-10">

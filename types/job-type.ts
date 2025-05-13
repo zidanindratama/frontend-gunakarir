@@ -30,3 +30,9 @@ export type TJob = {
   jobMajors: TJobMajor[];
   applications?: TApplication[];
 };
+
+export type TJobWithApplicants = TJob & {
+  _count: {
+    applications: number;
+  };
+};

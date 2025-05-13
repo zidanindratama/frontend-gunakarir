@@ -20,7 +20,7 @@ const CardPekerjaan = ({ job }: Props) => {
 
   return (
     <Link href={`/pekerjaan/${job.id}`}>
-      <div className="border rounded-lg p-4 space-y-2 bg-white dark:bg-neutral-900 dark:border-neutral-700 shadow-sm hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors duration-200">
+      <div className="border rounded-lg p-4 space-y-2 bg-white dark:bg-neutral-900 dark:border-neutral-700 shadow-sm hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors duration-200 h-full">
         <div className="flex flex-col gap-1 lg:flex-row lg:justify-between lg:items-center">
           <span className="text-sm font-medium text-muted-foreground order-1 sm:order-none">
             {job.salary

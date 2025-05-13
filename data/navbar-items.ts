@@ -9,6 +9,6 @@ export const navItems = [
   },
   {
     name: "Mitra",
-    link: "/",
+    link: "/mitra",
   },
 ];
