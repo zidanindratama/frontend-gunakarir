@@ -1,6 +1,8 @@
 "use client";
 
-import RecruiterStatusCard from "@/components/dashboard/main/reecuiter-status-card";
+import DasboardDataTablePekerjaan from "@/components/dashboard/main/recruiter/dashboard-data-table-pekerjaan";
+import { JobTypePieChart } from "@/components/dashboard/main/recruiter/job-type-pie-chart";
+import RecruiterStatusCard from "@/components/dashboard/main/recruiter/reecuiter-status-card";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -45,13 +47,29 @@ export default function DashboardMainPage() {
         </div>
       </header>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        {user?.role === "RECRUITER" && <RecruiterStatusCard />}
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div className="bg-muted/50 aspect-video rounded-xl" />
-          <div className="bg-muted/50 aspect-video rounded-xl" />
-          <div className="bg-muted/50 aspect-video rounded-xl" />
-        </div>
-        <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
+        {user?.role === "RECRUITER" && (
+          <div className="grid grid-cols-1 gap-6">
+            <RecruiterStatusCard />
+            <div className="grid grid-cols-1 xl:grid-cols-5 gap-10 items-stretch">
+              <div className="md:col-span-2 h-full">
+                <JobTypePieChart />
+              </div>
+              <div className="md:col-span-3 h-full">
+                <DasboardDataTablePekerjaan />
+              </div>
+            </div>
+          </div>
+        )}
+        {user?.role === "ADMIN" && (
+          <div className="">
+            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+              <div className="bg-muted/50 aspect-video rounded-xl" />
+              <div className="bg-muted/50 aspect-video rounded-xl" />
+              <div className="bg-muted/50 aspect-video rounded-xl" />
+            </div>
+            <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
+          </div>
+        )}
       </div>
     </section>
   );
