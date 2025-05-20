@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { TApplication } from "@/types/application-type";
 import {
   MapPin,
   Eye,
@@ -51,17 +52,35 @@ export const lamaranStatus = {
 
 export function LamaranStatusBadge({
   type,
+  application,
 }: {
   type: keyof typeof lamaranStatus;
+  application?: TApplication;
 }) {
   const status = lamaranStatus[type];
   if (!status) return null;
+
   const Icon = status.icon;
+
+  let stageLabel = "";
+  if (type === "UNDANGAN_INTERVIEW" && application?.interviews?.length) {
+    const latestInterview =
+      application.interviews[application.interviews.length - 1]; // ambil interview pertama, bisa ubah logic kalau perlu
+    stageLabel =
+      latestInterview.type === "HR"
+        ? " (HR Interview)"
+        : latestInterview.type === "MANAGEMENT"
+        ? " (Manajemen Interview)"
+        : "";
+  }
 
   return (
     <div className={cn("inline-flex items-center gap-1 text-sm", status.color)}>
       <Icon className="w-4 h-4" />
-      <span>{status.label}</span>
+      <span>
+        {status.label}
+        {stageLabel}
+      </span>
     </div>
   );
 }

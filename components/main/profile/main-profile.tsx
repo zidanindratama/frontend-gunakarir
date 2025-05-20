@@ -215,136 +215,140 @@ const MainProfile = () => {
                   </div>
                 ))
               ) : myApplications?.length > 0 ? (
-                myApplications.map((application, index) => (
-                  <motion.div
-                    className="bg-white dark:bg-neutral-900 border p-6 rounded-2xl shadow-sm"
-                    key={application.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{
-                      duration: 0.8,
-                      delay: index * 0.4,
-                    }}
-                  >
-                    <div className="flex flex-col md:flex-row justify-between gap-6">
-                      <div className="flex-1">
-                        <h2 className="text-lg md:text-xl font-semibold mb-2">
-                          {application.job?.title}
-                        </h2>
-                        <div className="flex flex-wrap gap-3 items-center mb-4">
-                          <span className="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 text-sm rounded">
-                            {getJobTypeLabel(application.job?.type ?? "")}
-                          </span>
-                          <span className="text-sm text-muted-foreground">
-                            Gaji:{" "}
-                            {application?.job?.salary
-                              ? `${Number(
-                                  application?.job?.salary
-                                ).toLocaleString("id-ID", {
-                                  style: "currency",
-                                  currency: "IDR",
-                                })}`
-                              : "-"}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-4">
-                          {application.job?.recruiter.company_logo && (
-                            <Image
-                              src={application.job?.recruiter.company_logo}
-                              alt={application.job?.recruiter.company_name}
-                              width={64}
-                              height={64}
-                              className="rounded-md"
-                            />
-                          )}
-                          <div>
-                            <h3 className="font-medium">
-                              {application.job?.recruiter.company_name}
-                            </h3>
-                            <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                              <MapPin className="w-4 h-4" />
-                              {getProvinceName(
-                                application.job?.province_id ?? ""
-                              )}
+                myApplications.map((application, index) => {
+                  console.log(application);
+
+                  return (
+                    <motion.div
+                      className="bg-white dark:bg-neutral-900 border p-6 rounded-2xl shadow-sm"
+                      key={application.id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{
+                        duration: 0.8,
+                        delay: index * 0.4,
+                      }}
+                    >
+                      <div className="flex flex-col md:flex-row justify-between gap-6">
+                        <div className="flex-1">
+                          <h2 className="text-lg md:text-xl font-semibold mb-2">
+                            {application.job?.title}
+                          </h2>
+                          <div className="flex flex-wrap gap-3 items-center mb-4">
+                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-100 text-sm rounded">
+                              {getJobTypeLabel(application.job?.type ?? "")}
+                            </span>
+                            <span className="text-sm text-muted-foreground">
+                              Gaji:{" "}
+                              {application?.job?.salary
+                                ? `${Number(
+                                    application?.job?.salary
+                                  ).toLocaleString("id-ID", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                  })}`
+                                : "-"}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            {application.job?.recruiter.company_logo && (
+                              <Image
+                                src={application.job?.recruiter.company_logo}
+                                alt={application.job?.recruiter.company_name}
+                                width={64}
+                                height={64}
+                                className="rounded-md"
+                              />
+                            )}
+                            <div>
+                              <h3 className="font-medium">
+                                {application.job?.recruiter.company_name}
+                              </h3>
+                              <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                                <MapPin className="w-4 h-4" />
+                                {getProvinceName(
+                                  application.job?.province_id ?? ""
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="md:w-1/3 border-t md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-6 flex flex-col gap-3">
-                        <div>
-                          <h4 className="font-semibold text-muted-foreground mb-1">
-                            Status
-                          </h4>
-                          <LamaranStatusBadge
-                            type={getLamaranStatusKey(application.status)}
-                          />
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                          {new Date(application.applied_at).toLocaleDateString(
-                            "id-ID",
-                            {
+                        <div className="md:w-1/3 border-t md:border-t-0 md:border-l pt-6 md:pt-0 md:pl-6 flex flex-col gap-3">
+                          <div>
+                            <h4 className="font-semibold text-muted-foreground mb-1">
+                              Status
+                            </h4>
+                            <LamaranStatusBadge
+                              type={getLamaranStatusKey(application.status)}
+                              application={application}
+                            />
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {new Date(
+                              application.applied_at
+                            ).toLocaleDateString("id-ID", {
                               day: "numeric",
                               month: "long",
                               year: "numeric",
-                            }
-                          )}
-                        </p>
-                        <div className="flex flex-col gap-3">
-                          <Button
-                            variant="outline"
-                            className="w-full"
-                            onClick={() => {
-                              setSelectedApplication(application);
-                              setOpenDrawer(true);
-                            }}
-                          >
-                            Lihat Detail
-                          </Button>
-                          {!application.AiInterview ? (
+                            })}
+                          </p>
+                          <div className="flex flex-col gap-3">
                             <Button
-                              className="w-full bg-blue-500"
-                              disabled={isPending}
+                              variant="outline"
+                              className="w-full"
                               onClick={() => {
                                 setSelectedApplication(application);
-                                generateQuestions(
-                                  {},
-                                  {
-                                    onSuccess: (res) => {
-                                      const interviewId = res?.data?.id;
-                                      if (interviewId) {
-                                        router.push(
-                                          `/profile/interview/${interviewId}/${application.id}`
-                                        );
-                                      }
-                                    },
-                                  }
-                                );
+                                setOpenDrawer(true);
                               }}
                             >
-                              {isPending ? (
-                                <>
-                                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                  Memproses...
-                                </>
-                              ) : (
-                                "Simulasi Interview"
-                              )}
+                              Lihat Detail
                             </Button>
-                          ) : (
-                            <Button
-                              className="w-full bg-green-500"
-                              onClick={() =>
-                                handleInterviewRedirect(application)
-                              }
-                            >
-                              Simulasi Interview
-                            </Button>
-                          )}
+                            {!application.AiInterview ? (
+                              <Button
+                                className="w-full bg-blue-500"
+                                disabled={isPending}
+                                onClick={() => {
+                                  setSelectedApplication(application);
+                                  generateQuestions(
+                                    {},
+                                    {
+                                      onSuccess: (res) => {
+                                        const interviewId = res?.data?.id;
+                                        if (interviewId) {
+                                          router.push(
+                                            `/profile/interview/${interviewId}/${application.id}`
+                                          );
+                                        }
+                                      },
+                                    }
+                                  );
+                                }}
+                              >
+                                {isPending ? (
+                                  <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Memproses...
+                                  </>
+                                ) : (
+                                  "Simulasi Interview"
+                                )}
+                              </Button>
+                            ) : (
+                              <Button
+                                className="w-full bg-green-500"
+                                onClick={() =>
+                                  handleInterviewRedirect(application)
+                                }
+                              >
+                                Simulasi Interview
+                              </Button>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))
+                    </motion.div>
+                  );
+                })
               ) : (
                 <NotFoundContent message="Belum ada lamaran yang dikirim." />
               )}
