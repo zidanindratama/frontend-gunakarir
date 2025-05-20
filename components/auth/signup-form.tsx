@@ -48,7 +48,6 @@ export function SignupForm({
   });
 
   const role = form.watch("role");
-  console.log(role === "RECRUITER");
 
   const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
     setIsPending(true);

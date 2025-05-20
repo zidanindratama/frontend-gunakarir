@@ -35,8 +35,6 @@ const CvScreeningTable = ({ pekerjaanId }: Props) => {
     totalPages: 1,
   };
 
-  console.log(applications);
-
   const filterOptions = {
     status: {
       placeholder: "Pilih Status Lamaran",

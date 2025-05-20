@@ -131,8 +131,6 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
         : undefined,
     };
 
-    console.log(payload);
-
     mutate(payload, {
       onSuccess: () => {
         if (finalStatus) {

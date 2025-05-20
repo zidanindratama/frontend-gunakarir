@@ -2,6 +2,7 @@ import { TJob } from "./job-type";
 import { TStudent } from "./student-type";
 import { TStage } from "./stage-type";
 import { TInterview } from "./interview-type";
+import { TAiInterview } from "./ai-interview-type";
 
 export type ApplicationStatus =
   | "SUBMITTED"
@@ -33,4 +34,5 @@ export type TApplication = {
   updated_at: string;
   stages: TStage[];
   interviews: TInterview[];
+  AiInterview?: TAiInterview;
 };

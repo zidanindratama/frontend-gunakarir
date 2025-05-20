@@ -37,7 +37,6 @@ const FormAdminProfile = () => {
     dataProtected: "auth/me",
   });
   const user: TUser = userData?.data;
-  console.log(user);
 
   const preloadValues: AdminProfileUpdateFormData = {
     username: user.username ?? "",

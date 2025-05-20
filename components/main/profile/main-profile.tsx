@@ -35,14 +35,18 @@ import { useWilayah } from "@/hooks/useWilayah";
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-import { MapPin } from "lucide-react";
+import { Loader2, MapPin } from "lucide-react";
 import { LamaranStatusBadge } from "./lamaran-status";
 import { motion } from "framer-motion";
 import CardPekerjaan from "../pekerjaan/card-pekerjaan";
 import PesanStatus from "./pesan-lamaran/pesan-status";
 import NotFoundContent from "../not-found-content";
+import { usePostData } from "@/hooks/use-post-data";
+import { useRouter } from "next/navigation";
 
 const MainProfile = () => {
+  const router = useRouter();
+
   const [selectedApplication, setSelectedApplication] =
     React.useState<TApplication | null>(null);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -72,19 +76,42 @@ const MainProfile = () => {
     }?${queryParams.toString()}`,
   });
 
+  const myApplications: TApplication[] = myApplicationsData?.data.data;
+  const totalPages = myApplicationsData?.data.meta?.totalPages || 1;
+
+  const { mutate: generateQuestions, isPending } = usePostData({
+    queryKey: "generate-questions",
+    dataProtected: `ai-interviews/generate/${selectedApplication?.id}`,
+    successMessage: "Pertanyaan interview berhasil dibuat!",
+  });
+
   const wilayah = useWilayah({});
   const getProvinceName = (id: string) => {
     return wilayah.provinceOptions.find((prov) => prov.id === id)?.name ?? "-";
   };
-
-  const myApplications: TApplication[] = myApplicationsData?.data.data;
-  const totalPages = myApplicationsData?.data.meta?.totalPages || 1;
 
   const handleResetFilters = () => {
     setSelectedApplicationStatus("");
     setSearchQuery("");
     setCurrentPage(1);
   };
+
+  function handleInterviewRedirect(application: TApplication) {
+    const interview = application.AiInterview;
+
+    if (!interview) return;
+
+    const allAnswered = interview.questions?.every((q) => q.answer);
+    const allFeedbacked = interview.questions?.every(
+      (q) => q.feedback?.feedback
+    );
+
+    if (allAnswered && allFeedbacked) {
+      router.push(`/profile/interview/feedback/${application.id}`);
+    } else {
+      router.push(`/profile/interview/${interview.id}/${application.id}`);
+    }
+  }
 
   return (
     <section className="w-full bg-white dark:bg-neutral-950 z-1 relative">
@@ -262,16 +289,58 @@ const MainProfile = () => {
                             }
                           )}
                         </p>
-                        <Button
-                          variant="outline"
-                          className="w-full"
-                          onClick={() => {
-                            setSelectedApplication(application);
-                            setOpenDrawer(true);
-                          }}
-                        >
-                          Lihat Detail
-                        </Button>
+                        <div className="flex flex-col gap-3">
+                          <Button
+                            variant="outline"
+                            className="w-full"
+                            onClick={() => {
+                              setSelectedApplication(application);
+                              setOpenDrawer(true);
+                            }}
+                          >
+                            Lihat Detail
+                          </Button>
+                          {!application.AiInterview ? (
+                            <Button
+                              className="w-full bg-blue-500"
+                              disabled={isPending}
+                              onClick={() => {
+                                setSelectedApplication(application);
+                                generateQuestions(
+                                  {},
+                                  {
+                                    onSuccess: (res) => {
+                                      const interviewId = res?.data?.id;
+                                      if (interviewId) {
+                                        router.push(
+                                          `/profile/interview/${interviewId}/${application.id}`
+                                        );
+                                      }
+                                    },
+                                  }
+                                );
+                              }}
+                            >
+                              {isPending ? (
+                                <>
+                                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                  Memproses...
+                                </>
+                              ) : (
+                                "Simulasi Interview"
+                              )}
+                            </Button>
+                          ) : (
+                            <Button
+                              className="w-full bg-green-500"
+                              onClick={() =>
+                                handleInterviewRedirect(application)
+                              }
+                            >
+                              Simulasi Interview
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </motion.div>

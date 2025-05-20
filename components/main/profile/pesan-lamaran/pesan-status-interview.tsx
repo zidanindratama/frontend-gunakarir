@@ -45,8 +45,6 @@ const PesanStatusInterview = ({ application, onCloseDrawer }: Props) => {
     ? new Date(interview.confirm_deadline) < now
     : false;
 
-  console.log(application);
-
   const form = useForm<ApplicationUpdateFormData>({
     resolver: zodResolver(ApplicationUpdateSchema),
     defaultValues: {
