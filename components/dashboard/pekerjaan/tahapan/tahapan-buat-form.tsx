@@ -41,8 +41,7 @@ import { useForm } from "react-hook-form";
 import React, { useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { MdDoNotDisturbAlt } from "react-icons/md";
-import { MdOutlineCheck } from "react-icons/md";
+import { MdDoNotDisturbAlt, MdOutlineCheck } from "react-icons/md";
 
 const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
   const { data: applicationData } = useGetData({
@@ -68,7 +67,6 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
   const watchMethod = form.watch("method");
   const watchSameLocation = form.watch("is_same_location");
   const watchFinalStatus = form.watch("final_status");
-
   const isAccepted = watchFinalStatus === "ACCEPTED";
 
   const showInterviewForm =
@@ -89,24 +87,18 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
   });
 
   const onSubmit = (values: RecruitmentStageCreateFormData) => {
-    let nextStage:
-      | "CV_SCREENING"
-      | "HR_INTERVIEW"
-      | "MANAGEMENT_INTERVIEW"
-      | undefined = currentStage;
+    let nextStage = currentStage;
+    let statusUpdate = values.final_status;
 
-    let finalStatus = values.final_status;
-
-    const isAccepted = finalStatus === "ACCEPTED";
-
-    if (currentStage === "CV_SCREENING" && isAccepted) {
+    if (currentStage === "CV_SCREENING" && values.final_status === "ACCEPTED") {
       nextStage = "HR_INTERVIEW";
-      finalStatus = "INTERVIEW_INVITED";
-    } else if (currentStage === "HR_INTERVIEW" && isAccepted) {
+      statusUpdate = "INTERVIEW_INVITED";
+    } else if (
+      currentStage === "HR_INTERVIEW" &&
+      values.final_status === "ACCEPTED"
+    ) {
       nextStage = "MANAGEMENT_INTERVIEW";
-      finalStatus = "INTERVIEW_INVITED";
-    } else if (!isAccepted) {
-      nextStage = currentStage;
+      statusUpdate = "INTERVIEW_INVITED";
     }
 
     const payload = {
@@ -114,6 +106,7 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
         stage_type: nextStage,
         notes: values.notes,
       },
+      final_status: statusUpdate,
       interview: showInterviewForm
         ? {
             schedule: values.schedule,
@@ -123,7 +116,7 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
             location:
               values.method === "OFFLINE"
                 ? values.is_same_location
-                  ? application.job?.recruiter.address
+                  ? application?.job?.recruiter.address
                   : values.location
                 : undefined,
             notes: values.notes,
@@ -133,8 +126,8 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
 
     mutate(payload, {
       onSuccess: () => {
-        if (finalStatus) {
-          updateApplicationStatus({ status: finalStatus });
+        if (statusUpdate) {
+          updateApplicationStatus({ status: statusUpdate });
         }
       },
     });
@@ -184,12 +177,12 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
                         <Label
                           htmlFor="ditolak"
                           className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 text-center text-muted-foreground hover:bg-accent hover:text-accent-foreground
-              peer-data-[state=checked]:border-red-600
-              peer-data-[state=checked]:text-red-600
-              peer-data-[state=checked]:bg-red-100
-              dark:peer-data-[state=checked]:border-red-500
-              dark:peer-data-[state=checked]:text-red-400
-              dark:peer-data-[state=checked]:bg-red-900"
+                            peer-data-[state=checked]:border-red-600
+                            peer-data-[state=checked]:text-red-600
+                            peer-data-[state=checked]:bg-red-100
+                            dark:peer-data-[state=checked]:border-red-500
+                            dark:peer-data-[state=checked]:text-red-400
+                            dark:peer-data-[state=checked]:bg-red-900"
                         >
                           <MdDoNotDisturbAlt className="w-5 h-5 mb-1" />
                           Tolak
@@ -205,12 +198,12 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
                         <Label
                           htmlFor="diterima"
                           className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 text-center text-muted-foreground hover:bg-accent hover:text-accent-foreground
-              peer-data-[state=checked]:border-green-600
-              peer-data-[state=checked]:text-green-600
-              peer-data-[state=checked]:bg-green-100
-              dark:peer-data-[state=checked]:border-green-500
-              dark:peer-data-[state=checked]:text-green-400
-              dark:peer-data-[state=checked]:bg-green-900"
+                            peer-data-[state=checked]:border-green-600
+                            peer-data-[state=checked]:text-green-600
+                            peer-data-[state=checked]:bg-green-100
+                            dark:peer-data-[state=checked]:border-green-500
+                            dark:peer-data-[state=checked]:text-green-400
+                            dark:peer-data-[state=checked]:bg-green-900"
                         >
                           <MdOutlineCheck className="w-5 h-5 mb-1" />
                           Lolos
@@ -222,6 +215,7 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="notes"
@@ -235,16 +229,15 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
                 </FormItem>
               )}
             />
+
             {showInterviewForm && (
               <>
                 <FormField
                   control={form.control}
                   name="schedule"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col gap-2">
-                      <FormLabel htmlFor="datetime">
-                        Tanggal Wawancara
-                      </FormLabel>
+                    <FormItem>
+                      <FormLabel>Tanggal Wawancara</FormLabel>
                       <FormControl>
                         <DateTimePicker
                           placeholder="Pilih tanggal wawancara"
@@ -260,11 +253,11 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
                   control={form.control}
                   name="confirm_deadline"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col gap-2">
-                      <FormLabel htmlFor="datetime">Batas Konfirmasi</FormLabel>
+                    <FormItem>
+                      <FormLabel>Batas Konfirmasi</FormLabel>
                       <FormControl>
                         <DateTimePicker
-                          placeholder="Pilih tanggal batas konfirmasi"
+                          placeholder="Pilih batas konfirmasi"
                           value={field.value}
                           onChange={field.onChange}
                         />
@@ -281,11 +274,17 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
                       <FormLabel>Metode Interview</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Pilih Metode" />
+                            <SelectValue placeholder="Pilih Metode">
+                              {{
+                                ONLINE: "Online",
+                                OFFLINE: "Offline",
+                              }[field.value as "ONLINE" | "OFFLINE"] ??
+                                "Pilih Metode"}
+                            </SelectValue>
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -297,6 +296,7 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
                     </FormItem>
                   )}
                 />
+
                 {watchMethod === "ONLINE" && (
                   <FormField
                     control={form.control}
@@ -315,6 +315,7 @@ const TahapanBuatForm = ({ applicationId }: { applicationId: string }) => {
                     )}
                   />
                 )}
+
                 {watchMethod === "OFFLINE" && (
                   <>
                     <FormField
