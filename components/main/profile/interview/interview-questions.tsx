@@ -9,7 +9,6 @@ import { TAiInterviewQuestion } from "@/types/ai-interview-question-type";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 type InterviewQuestionsProps = {
   interviewId: string;
@@ -20,8 +19,6 @@ const InterviewQuestions = ({
   interviewId,
   applicationId,
 }: InterviewQuestionsProps) => {
-  const router = useRouter();
-
   const { data: interviewQuestionsData, isLoading } = useGetData({
     queryKey: ["interview-questions", interviewId],
     dataProtected: `ai-interviews/questions/${interviewId}`,
@@ -32,6 +29,7 @@ const InterviewQuestions = ({
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const storedAnswers = localStorage.getItem(`answers-${interviewId}`);
@@ -43,18 +41,6 @@ const InterviewQuestions = ({
   useEffect(() => {
     localStorage.setItem(`answers-${interviewId}`, JSON.stringify(answers));
   }, [answers, interviewId]);
-
-  useEffect(() => {
-    if (!isLoading && interviewQuestions.length > 0) {
-      const allAnswered = interviewQuestions.every(
-        (q) => q.answer && q.answer.trim() !== ""
-      );
-
-      if (allAnswered) {
-        router.push(`/profile/interview/feedback/${applicationId}`);
-      }
-    }
-  }, [interviewQuestions, applicationId, router, isLoading]);
 
   const handleChangeAnswer = (questionId: string, value: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
@@ -83,13 +69,19 @@ const InterviewQuestions = ({
     const payload = {
       answers: interviewQuestions.map((q) => ({
         questionId: q.id,
-        answer: answers[q.id] || "",
+        answer: answers[q.id].trim(),
       })),
     };
 
+    setIsSubmitting(true);
     postAnswers.mutate(payload, {
       onSuccess: () => {
         localStorage.removeItem(`answers-${interviewId}`);
+        setAnswers({});
+        setCurrentIndex(0);
+      },
+      onSettled: () => {
+        setIsSubmitting(false);
       },
     });
   };
@@ -125,12 +117,13 @@ const InterviewQuestions = ({
               onChange={(e) =>
                 handleChangeAnswer(currentQuestion.id, e.target.value)
               }
+              disabled={isSubmitting}
             />
             <div className="flex justify-between">
               <Button
                 className="bg-blue-500 dark:text-white dark:bg-blue-800"
                 onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
-                disabled={currentIndex === 0}
+                disabled={currentIndex === 0 || isSubmitting}
               >
                 Sebelumnya
               </Button>
@@ -143,16 +136,17 @@ const InterviewQuestions = ({
                       Math.min(prev + 1, interviewQuestions.length - 1)
                     )
                   }
+                  disabled={isSubmitting}
                 >
                   Selanjutnya
                 </Button>
               ) : (
                 <Button
                   onClick={handleSubmitAnswers}
-                  disabled={postAnswers.isPending}
+                  disabled={isSubmitting}
                   className="bg-green-600 text-white"
                 >
-                  {postAnswers.isPending ? (
+                  {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Mengirim...
