@@ -11,4 +11,8 @@ export const navItems = [
     name: "Mitra",
     link: "/mitra",
   },
+  {
+    name: "Bantuan",
+    link: "/bantuan",
+  },
 ];
