@@ -15,4 +15,8 @@ export const navItems = [
     name: "Bantuan",
     link: "/bantuan",
   },
+  {
+    name: "Umpan Balik",
+    link: "/umpan-balik",
+  },
 ];

@@ -5,6 +5,8 @@ export const footerLinkItems = [
       { name: "Beranda", href: "/" },
       { name: "Pekerjaan", href: "/pekerjaan" },
       { name: "Mitra", href: "/mitra" },
+      { name: "Bantuan", href: "/bantuan" },
+      { name: "Umpan Balik", href: "/umpan-balik" },
     ],
   },
   {

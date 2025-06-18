@@ -3,6 +3,7 @@ import {
   Building2,
   LayoutDashboard,
   LifeBuoy,
+  MessageSquareLock,
   Send,
   SquareTerminal,
   User,
@@ -49,6 +50,11 @@ export const routeItems: RouteItems = {
       name: "Mahasiswa",
       url: "/dashboard/mahasiswa",
       icon: User,
+    },
+    {
+      name: "Umpan Balik",
+      url: "/dashboard/umpan-balik",
+      icon: MessageSquareLock,
     },
   ],
 };

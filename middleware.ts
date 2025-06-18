@@ -5,7 +5,11 @@ import { jwtDecode } from "jwt-decode";
 export const routePermissions = {
   authRoutes: ["/sign-in", "/sign-up"],
   baseRoutes: ["/dashboard"],
-  adminRoutes: ["/dashboard/rekruter", "/dashboard/mahasiswa"],
+  adminRoutes: [
+    "/dashboard/rekruter",
+    "/dashboard/mahasiswa",
+    "/dashboard/umpan-balik",
+  ],
   recruiterRoutes: ["/dashboard/pekerjaan"],
   studentRoutes: ["/profile"],
   commonAdminAndRecruiterRoutes: ["/dashboard/profile"],
