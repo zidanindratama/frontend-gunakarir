@@ -43,6 +43,7 @@ import PesanStatus from "./pesan-lamaran/pesan-status";
 import NotFoundContent from "../not-found-content";
 import { usePostData } from "@/hooks/use-post-data";
 import { useRouter } from "next/navigation";
+import UbahPasswordForm from "./ubah-password";
 
 const MainProfile = () => {
   const router = useRouter();
@@ -136,9 +137,7 @@ const MainProfile = () => {
                 <Button variant="outline" asChild>
                   <Link href="/profile/ubah">Ubah Profile</Link>
                 </Button>
-                <Button variant="outline" asChild>
-                  <Link href="/profile/ubah-password">Ubah Password</Link>
-                </Button>
+                <UbahPasswordForm />
               </div>
             </div>
           </div>

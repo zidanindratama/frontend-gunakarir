@@ -24,9 +24,17 @@ const SigninPage = () => {
               </span>
             </Link>
           </div>
-          <div className="flex flex-1 items-center justify-center">
+          <div className="flex flex-1 flex-col items-center justify-center">
             <div className="w-full max-w-xs md:max-w-lg">
               <SigninForm />
+              <div className="mt-4 text-center">
+                <Link
+                  href="/password/forgot"
+                  className="text-sm text-blue-600 hover:underline"
+                >
+                  Lupa kata sandi?
+                </Link>
+              </div>
             </div>
           </div>
         </div>

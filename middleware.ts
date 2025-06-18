@@ -12,7 +12,10 @@ export const routePermissions = {
   ],
   recruiterRoutes: ["/dashboard/pekerjaan"],
   studentRoutes: ["/profile"],
-  commonAdminAndRecruiterRoutes: ["/dashboard/profile"],
+  commonAdminAndRecruiterRoutes: [
+    "/dashboard/profile",
+    "/dashboard/ubah-password",
+  ],
 };
 
 type UserRole = "ADMIN" | "RECRUITER" | "STUDENT";

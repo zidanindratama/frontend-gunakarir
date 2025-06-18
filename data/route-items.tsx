@@ -3,6 +3,7 @@ import {
   Building2,
   LayoutDashboard,
   LifeBuoy,
+  LockKeyhole,
   MessageSquareLock,
   Send,
   SquareTerminal,
@@ -38,6 +39,11 @@ export const routeItems: RouteItems = {
       title: "Umpan Balik",
       url: "/umpan-balik",
       icon: Send,
+    },
+    {
+      title: "Ubah Password",
+      url: "/dashboard/ubah-password",
+      icon: LockKeyhole,
     },
   ],
   managementNav: [

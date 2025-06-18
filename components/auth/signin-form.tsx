@@ -149,7 +149,10 @@ export function SigninForm({
         </div>
         <div className="text-center text-sm">
           Belum punya akun?{" "}
-          <a href="/sign-up" className="underline underline-offset-4">
+          <a
+            href="/sign-up"
+            className="underline underline-offset-4 text-blue-500"
+          >
             Daftar di sini
           </a>
         </div>
