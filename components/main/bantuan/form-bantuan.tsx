@@ -106,7 +106,8 @@ const FormBantuan = () => {
                 href="https://map.google.com"
                 target="_blank"
               >
-                Pondok Cina, Kecamatan Beji, Kota Depok, Jawa Barat
+                Jl. Margonda Raya No. 100, Pondok Cina, Kecamatan Beji, Kota
+                Depok, Jawa Barat
               </Link>
             </div>
             <div>
@@ -119,9 +120,9 @@ const FormBantuan = () => {
               </p>
               <Link
                 className="font-medium text-primary"
-                href="tel:(021) 29428935"
+                href="tel:(+62) 877-1404-4760"
               >
-                (021) 29428935
+                (+62) 877-1404-4760
               </Link>
             </div>
           </div>
