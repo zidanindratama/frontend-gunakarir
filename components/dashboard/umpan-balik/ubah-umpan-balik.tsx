@@ -56,8 +56,6 @@ const UbahUmpanBalik = ({ feedbackId }: Props) => {
     dataProtected: `feedbacks/${feedbackId}`,
   });
 
-  console.log(feedbackData);
-
   useEffect(() => {
     if (feedbackData?.data) {
       form.reset({

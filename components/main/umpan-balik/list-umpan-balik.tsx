@@ -48,8 +48,6 @@ const ListUmpanBalik = () => {
   const feedbacks: TFeedback[] = data?.data.feedbacks || [];
   const totalPages = data?.data.meta?.totalPages || 1;
 
-  console.log(myFeedback);
-
   const handleResetFilters = () => {
     setSearchQuery("");
     setSelectedRating("all");

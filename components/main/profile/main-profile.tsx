@@ -215,8 +215,6 @@ const MainProfile = () => {
                 ))
               ) : myApplications?.length > 0 ? (
                 myApplications.map((application, index) => {
-                  console.log(application);
-
                   return (
                     <motion.div
                       className="bg-white dark:bg-neutral-900 border p-6 rounded-2xl shadow-sm"
