@@ -194,7 +194,7 @@ const RecruiterReviewForm = ({ recruiterId }: Props) => {
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Pilih status verifikasi" />
                         </SelectTrigger>
                         <SelectContent>
