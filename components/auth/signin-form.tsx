@@ -63,7 +63,9 @@ export function SigninForm({
       if (error instanceof AxiosError) {
         toast("Gagal masuk!", {
           description:
-            error?.response?.data?.message || "Terjadi kesalahan saat masuk.",
+            typeof error?.response?.data?.message === "string"
+              ? error.response.data.message
+              : "Terjadi kesalahan saat masuk.",
         });
       } else {
         toast("Terjadi kesalahan!", {
