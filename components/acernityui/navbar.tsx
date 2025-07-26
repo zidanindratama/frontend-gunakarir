@@ -242,9 +242,7 @@ export const NavbarLogo = () => {
         width={30}
         height={30}
       />
-      <span className="text-xl font-medium text-black dark:text-white">
-        GunaKarir
-      </span>
+      <span className="text-xl font-medium text-white">GunaKarir</span>
     </Link>
   );
 };
