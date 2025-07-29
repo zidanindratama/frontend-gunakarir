@@ -98,7 +98,7 @@ const ListPekerjaan = () => {
 
   return (
     <section className="w-full bg-white dark:bg-neutral-950 z-1 relative">
-      <div className="container mx-auto px-4 py-36 md:px-10">
+      <div className="container mx-auto px-4 pt-36 pb-20 md:px-10">
         <h1 className="text-center text-xl md:text-3xl font-bold mb-6">
           Temukan Lowongan Pekerjaan
         </h1>
